@@ -10,23 +10,23 @@ from elib.config.property import ConfigProp
 
 class DummyConfig(BaseConfig):
 
-    @ConfigProp(False, bool)
+    @ConfigProp(bool, False)
     def debug(self):
         pass
 
-    @ConfigProp('', str)
+    @ConfigProp(str, '')
     def string(self):
         pass
 
-    @ConfigProp(0, int)
+    @ConfigProp(int, 0)
     def integer(self):
         pass
 
-    @ConfigProp(None, list)
+    @ConfigProp(list, None)
     def some_list(self):
         pass
 
-    @ConfigProp('', str, 'namespace')
+    @ConfigProp(str, '', 'namespace')
     def key(self):
         pass
 
