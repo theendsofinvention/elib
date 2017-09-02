@@ -1,6 +1,6 @@
 # coding=utf-8
 """
-Manages ESST configuration
+Manages Config
 """
 
 import os
@@ -27,8 +27,10 @@ class Config:
                 YAMLConfig(
                     [
                         os.environ.get(f'{package_name.upper()}_YAML'),
-                        os.path.join(os.path.expanduser('~'), f'{package_name}.yml'),
-                        os.path.join(os.path.expanduser('~'), f'{package_name}.yaml'),
+                        os.path.join(os.path.expanduser(
+                            '~'), f'{package_name}.yml'),
+                        os.path.join(os.path.expanduser('~'),
+                                     f'{package_name}.yaml'),
                         f'./{package_name}.yml',
                         f'./{package_name}.yaml',
                     ]
@@ -36,7 +38,8 @@ class Config:
                 everett.manager.ConfigIniEnv(
                     [
                         os.environ.get(f'{package_name.upper()}_INI'),
-                        os.path.join(os.path.expanduser('~'), f'{package_name}.ini'),
+                        os.path.join(os.path.expanduser(
+                            '~'), f'{package_name}.ini'),
                         f'./{package_name}.ini',
                     ]
                 ),

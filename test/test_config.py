@@ -1,7 +1,9 @@
 # coding=utf-8
 
 import os
+
 import pytest
+
 from elib.config import Config
 from elib.config.property import ConfigProp
 
@@ -66,7 +68,8 @@ integer: 1
 
 @pytest.mark.parametrize('key', ['debug', 'DEBUG'])
 def test_default_dict(key):
-    cfg = DummyConfig('test', {key: 'true', 'string': 'some string', 'integer': 1})
+    cfg = DummyConfig(
+        'test', {key: 'true', 'string': 'some string', 'integer': 1})
     assert cfg.debug is True
     assert cfg.string == 'some string'
     assert cfg.integer is 1
@@ -104,4 +107,3 @@ namespace:
 ''')
     cfg = DummyConfig('test')
     assert cfg.key == 'value'
-

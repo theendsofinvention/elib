@@ -39,7 +39,7 @@ class _ConfigProp:
 
         If instance is None, returns the descriptor object to allow access to "default" and "type"
 
-        If instance is a valid Config object, returns instance.__getitem__() if it exists in the META or returns DEFAULT.
+        If instance is a valid Config object, returns value from it
 
         :param instance: instance of AbstractMeta
         :param owner: actual Class of the META instance
@@ -53,14 +53,8 @@ class _ConfigProp:
             return self
 
         if not isinstance(instance, Config):
-            raise TypeError('_ConfigProp can only be used with EverettConfig() instances')
-        cfg = getattr(instance, '_config')
-        value = cfg(
-            self.prop_name.upper(),
-            default=self.default,
-            parser=self.parser,
-            namespace=self.namespace
-        )
+            raise TypeError(
+                '_ConfigProp can only be used with EverettConfig() instances')
         return getattr(instance, '_config')(
             self.prop_name,
             default=self.default,
