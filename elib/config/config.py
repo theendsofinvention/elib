@@ -11,7 +11,7 @@ import everett.manager
 from .yaml_config import YAMLConfig
 
 
-class Config:
+class BaseConfig:
     """
     Singleton configuration class for EDLM.
     """

@@ -2,7 +2,7 @@
 
 import everett.manager
 
-from .config import Config
+from .config import BaseConfig
 
 
 class _ConfigProp:
@@ -52,7 +52,7 @@ class _ConfigProp:
             # Calling from Class object
             return self
 
-        if not isinstance(instance, Config):
+        if not isinstance(instance, BaseConfig):
             raise TypeError(
                 '_ConfigProp can only be used with EverettConfig() instances')
         return getattr(instance, '_config')(

@@ -4,11 +4,11 @@ import os
 
 import pytest
 
-from elib.config import Config
+from elib.config import BaseConfig
 from elib.config.property import ConfigProp
 
 
-class DummyConfig(Config):
+class DummyConfig(BaseConfig):
 
     @ConfigProp(False, bool)
     def debug(self):
