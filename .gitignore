@@ -2,3 +2,7 @@
 .env
 build/
 dist/
+/.eggs/
+/.cache/
+.idea
+__pycache__
