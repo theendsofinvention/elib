@@ -17,6 +17,12 @@ test_requires = [
     'flake8',
     'pylint',
     'safety',
+    'coverage',
+    'pytest-pep8',
+    'pytest-cache',
+    'pytest-catchlog',
+    'pytest-cov',
+    'hypothesis',
 ]
 
 dev_requires = [
