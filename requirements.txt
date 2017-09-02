@@ -1,0 +1,4 @@
+configobj==5.0.6          # via everett
+everett==0.9
+pyyaml==3.12
+six==1.10.0               # via configobj, everett
