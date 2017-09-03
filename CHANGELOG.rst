@@ -2,6 +2,15 @@ Changelog
 =========
 
 
+0.1.4 (2017-09-03)
+------------------
+
+Fix
+~~~
+- Don't cast str on all returns. [132nd-etcher]
+- Fix namespaces. [132nd-etcher]
+
+
 0.1.0 (2017-09-02)
 ------------------
 
