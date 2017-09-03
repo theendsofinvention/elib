@@ -55,9 +55,4 @@ class YAMLConfig:
 
     def get(self, key, namespace=None):
         value = everett.manager.get_key_from_envs(self.cfg, key, namespace)
-        if value is everett.NO_VALUE:
-            return value
-        else:
-            if isinstance(value, bool):
-                return str(value)
-            return value
+        return value
