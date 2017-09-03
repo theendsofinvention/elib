@@ -1,7 +1,7 @@
 # coding=utf-8
 
-import pytest
 import everett
+import pytest
 
 from elib.config import BaseConfig
 from elib.config.property import ConfigProp

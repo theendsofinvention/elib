@@ -62,13 +62,13 @@ class _ConfigProp:
                 parser=self.parser,
                 namespace=self.namespace
             )
-        else:
-            return getattr(instance, '_config')(
-                self.prop_name,
-                default=self.default,
-                parser=self.parser,
-                namespace=self.namespace
-            )
+
+        return getattr(instance, '_config')(
+            self.prop_name,
+            default=self.default,
+            parser=self.parser,
+            namespace=self.namespace
+        )
 
 
 class ConfigProp:
