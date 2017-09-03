@@ -1,15 +1,13 @@
 # coding=utf-8
 
-import os
-
 import pytest
+import everett
 
 from elib.config import BaseConfig
 from elib.config.property import ConfigProp
 
 
 class DummyConfig(BaseConfig):
-
     @ConfigProp(bool, False)
     def debug(self):
         pass
@@ -26,8 +24,12 @@ class DummyConfig(BaseConfig):
     def some_list(self):
         pass
 
-    @ConfigProp(str, '', 'namespace')
-    def key(self):
+    @ConfigProp(str, namespace='namespace')
+    def namespace_key(self):
+        pass
+
+    @ConfigProp(str)
+    def no_default(self):
         pass
 
 
@@ -103,7 +105,13 @@ some_list:
   - pingu
   - moose
 namespace:
-  key: value
+  key: 'caribou'
 ''')
     cfg = DummyConfig('test')
-    assert cfg.key == 'value'
+    assert cfg.namespace_key == 'caribou'
+
+
+def test_no_default():
+    cfg = DummyConfig('test')
+    with pytest.raises(everett.ConfigurationMissingError):
+        assert cfg.no_default == 'value'

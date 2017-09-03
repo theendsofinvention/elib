@@ -23,7 +23,9 @@ class _ConfigProp:
         :param parser: type of object allowed to be SET
         """
         self.func = func
-        self.prop_name = self.func.__name__
+        self.prop_name = self.func.__name__.upper()
+        if namespace:
+            self.prop_name = self.prop_name.replace(namespace.upper() + '_', '')
         if not isinstance(default, str):
             default = str(default)
         self.default = default
@@ -48,7 +50,6 @@ class _ConfigProp:
 
         # raise FileNotFoundError()
         if instance is None:
-            print('none')
             # Calling from Class object
             return self
 
