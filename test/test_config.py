@@ -78,7 +78,7 @@ def test_default_dict(key):
 
 
 @pytest.mark.parametrize('ext', ['yaml', 'yml'])
-def test_yaml_lists(ext):
+def test_yaml_list_of_str(ext):
     with open(f'test.{ext}', 'w') as stream:
         stream.write('''
 debug: "true"
@@ -91,6 +91,22 @@ some_list:
 ''')
     cfg = DummyConfig('test')
     assert cfg.some_list == ['caribou', 'pingu', 'moose']
+
+
+@pytest.mark.parametrize('ext', ['yaml', 'yml'])
+def test_yaml_list_of_int(ext):
+    with open(f'test.{ext}', 'w') as stream:
+        stream.write('''
+debug: "true"
+string: some string
+integer: 1
+some_list:
+  - 0
+  - -4
+  - 3
+''')
+    cfg = DummyConfig('test')
+    assert cfg.some_list == [0, -4, 3]
 
 
 @pytest.mark.parametrize('ext', ['yaml', 'yml'])
