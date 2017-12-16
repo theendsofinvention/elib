@@ -6,6 +6,6 @@ dist/
 /.cache/
 .idea
 __pycache__
-/.coverage
-/coverage.xml
-/htmlcov/
+.coverage
+coverage.xml
+htmlcov
