@@ -1,0 +1,29 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[requires]
+
+python_version = "3.6"
+
+
+[packages]
+
+configobj = "*"
+everett = "*"
+pyyaml = "*"
+
+
+[dev-packages]
+
+coverage = "*"
+hypothesis = "*"
+pytest-cache = "*"
+pytest-cov = "*"
+"pytest-pep8" = "*"
+pytest-pycharm = "*"
+pytest = "*"
+versioneer = "*"
