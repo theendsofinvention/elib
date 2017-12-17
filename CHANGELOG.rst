@@ -2,6 +2,21 @@ Changelog
 =========
 
 
+0.1.5 (2017-12-17)
+------------------
+
+Changes
+~~~~~~~
+- Clean setup. [132nd-etcher]
+- Install versioneer. [132nd-etcher]
+- Switch to pipenv for reqs. [132nd-etcher]
+
+Fix
+~~~
+- Fix epab config. [132nd-etcher]
+- Fix epab config. [132nd-etcher]
+
+
 0.1.4 (2017-09-03)
 ------------------
 
