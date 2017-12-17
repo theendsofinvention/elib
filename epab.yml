@@ -1,6 +1,5 @@
 package: 'elib'
 
-
 doc:
   repo: 'https://github.com/132nd-etcher/elib.git'
   folder: './elib'
