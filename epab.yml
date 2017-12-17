@@ -5,5 +5,5 @@ doc:
   folder: './elib'
 
 test:
-  runner: 'pytest'
-  av_runner: 'pytest --long'
+  runner_options: 'pytest'
+  av_runner_options: 'pytest --long'
