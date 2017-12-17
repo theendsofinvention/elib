@@ -1,4 +1,8 @@
 # coding=utf-8
+"""
+Config property
+"""
+# pylint: disable=too-few-public-methods
 
 import everett.manager
 
@@ -25,7 +29,8 @@ class _ConfigProp:
         self.func = func
         self.prop_name = self.func.__name__.upper()
         if namespace:
-            self.prop_name = self.prop_name.replace(namespace.upper() + '_', '')
+            self.prop_name = self.prop_name.replace(
+                namespace.upper() + '_', '')
         if not isinstance(default, str):
             default = str(default)
         self.default = default

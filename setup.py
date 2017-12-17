@@ -2,11 +2,9 @@
 
 import os
 
-from setuptools import setup
-
 import versioneer
-
 from pip.req import parse_requirements
+from setuptools import setup
 
 requirements = [str(r.req) for r in
                 parse_requirements('requirements.txt', session=False)]

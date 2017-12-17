@@ -2,6 +2,7 @@
 """
 Manages Config
 """
+# pylint: disable=too-few-public-methods
 
 import os
 
