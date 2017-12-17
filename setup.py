@@ -4,7 +4,7 @@ import os
 
 import versioneer
 from pip.req import parse_requirements
-from setuptools import setup
+from setuptools import find_packages, setup
 
 requirements = [str(r.req) for r in
                 parse_requirements('requirements.txt', session=False)]
@@ -40,7 +40,7 @@ setup(
     package_dir={'elib': 'elib'},
     package_data={},
     test_suite='pytest',
-    packages=['elib'],
+    packages=find_packages(),
     python_requires='>=3.6',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
