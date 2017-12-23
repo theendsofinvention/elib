@@ -19,10 +19,20 @@ PasteContent = namedtuple('PasteContent', 'filename content')
 
 
 class PasteError(requests.HTTPError):
+    """Raised on paste error"""
     pass
 
 
 def create_new_paste(title, files: typing.List[PasteContent], public: bool = False, language='lua'):
+    """
+    Creates a paste on Glot
+
+    :param title: name of the paste
+    :param files: list of PasteContent
+    :param public: whether or not paste is public
+    :param language: syntax highlighting
+    :return: URL of the newly created paste
+    """
     headers = {
         'Content-type': 'application/json',
     }
@@ -44,12 +54,3 @@ def create_new_paste(title, files: typing.List[PasteContent], public: bool = Fal
         return url
     else:
         raise PasteError(f'failed to post content; reason: {req.reason}')
-
-        # response = urlopen(url, data=urlencode(data).encode('ascii')).read()
-        # match = re.search(r'href="/raw/(\w+)"', response.decode('utf-8'))
-        # if match:
-        #     return '%s/show/%s' % (url, match.group(1))
-        #
-        # if not isinstance(response, str):
-        #     response = response.decode()
-        # return 'bad response: ' + response
