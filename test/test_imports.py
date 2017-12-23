@@ -19,15 +19,15 @@ import pytest
 
 # noinspection PyUnresolvedReferences,PyProtectedMember
 @pytest.mark.nocleandir
-@pytest.mark.parametrize('module', glob.glob('./elib/**/*.py', recursive=True))
-def test_imports(module):
-    module = module[2:-3].replace('\\', '.')
-    __import__(module)
+@pytest.mark.parametrize('module_', glob.glob('./elib/**/*.py', recursive=True))
+def test_imports(module_):
+    module_ = module_[2:-3].replace('\\', '.')
+    __import__(module_)
 
 
 # noinspection PyUnresolvedReferences,PyProtectedMember
 @pytest.mark.nocleandir
-@pytest.mark.parametrize('module', list(glob.glob('./test/**/*.py', recursive=True)))
-def test_imports_tests(module):
-    module = module[2:-3].replace('\\', '.')
-    __import__(module)
+@pytest.mark.parametrize('module_', list(glob.glob('./test/**/*.py', recursive=True)))
+def test_imports_tests(module_):
+    module_ = module_[2:-3].replace('\\', '.')
+    __import__(module_)

@@ -1,5 +1,7 @@
 # coding=utf-8
-
+"""
+Utilities to obtain random values
+"""
 
 import random
 import string

@@ -4,7 +4,14 @@ import everett
 import pytest
 
 from elib.config import BaseConfig
-from elib.config.property import ConfigProp
+# noinspection PyProtectedMember
+from elib.config.property import ConfigProp, _ConfigProp
+
+
+class WrongBaseClass:
+    @ConfigProp(str, '')
+    def string(self):
+        pass
 
 
 class DummyConfig(BaseConfig):
@@ -131,3 +138,14 @@ def test_no_default():
     cfg = DummyConfig('test')
     with pytest.raises(everett.ConfigurationMissingError):
         assert cfg.no_default == 'value'
+
+
+def test_wrong_base_class():
+    test = WrongBaseClass()
+    with pytest.raises(TypeError):
+        print(test.string)
+
+
+def test_calling_from_instance():
+    print(type(DummyConfig.integer))
+    assert isinstance(DummyConfig.integer, _ConfigProp)

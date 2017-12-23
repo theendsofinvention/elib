@@ -15,15 +15,10 @@ python_version = "3.6"
 configobj = "*"
 everett = "*"
 pyyaml = "*"
+epab = "*"
 
 
 [dev-packages]
 
-coverage = "*"
-hypothesis = "*"
-pytest-cache = "*"
-pytest-cov = "*"
-"pytest-pep8" = "*"
-pytest-pycharm = "*"
-pytest = "*"
-versioneer = "*"
+epab = "*"
+httmock = "*"
