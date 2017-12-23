@@ -100,7 +100,7 @@ def test_rotating_file_handler():
 
 # noinspection PyShadowingNames
 def test_custom_handler(setup_logging):
-    logger, caplog = setup_logging
+    logger, _ = setup_logging
 
     result = False
 
