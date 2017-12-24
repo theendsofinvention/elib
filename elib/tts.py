@@ -12,12 +12,17 @@ from elib import MAIN_LOGGER
 LOGGER = MAIN_LOGGER.getChild(__name__)
 
 
-def text_to_speech(text: str, file_path: typing.Union[str, Path], overwrite: False) -> Path:
+def text_to_speech(text: str, file_path: typing.Union[str, Path], overwrite: bool = False) -> Path:
     """
     Creates MP3 file from text
 
-    :param text: text to encode
-    :return: location of MP3
+    Args:
+        text: text to encode
+        file_path: path to MP3 file
+        overwrite: whether or not to overwrite existing file
+
+    Returns: path to saved MP3
+
     """
     LOGGER.debug(f'{text}\n->{file_path}')
     if isinstance(file_path, str):
