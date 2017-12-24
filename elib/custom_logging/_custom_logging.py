@@ -76,6 +76,7 @@ def get_logger(
 
     kwargs = locals()
     logger = base.getLogger(logger_name)
+    logger.setLevel(base.DEBUG)
 
     if log_to_file:
         _setup_file_logging(logger, **kwargs)
