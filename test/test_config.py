@@ -93,11 +93,11 @@ string: some string
 integer: 1
 some_list:
   - caribou
-  - pingu
+  - gopher
   - moose
 ''')
     cfg = DummyConfig('test')
-    assert cfg.some_list == ['caribou', 'pingu', 'moose']
+    assert cfg.some_list == ['caribou', 'gopher', 'moose']
 
 
 @pytest.mark.parametrize('ext', ['yaml', 'yml'])
@@ -125,7 +125,7 @@ string: some string
 integer: 1
 some_list:
   - caribou
-  - pingu
+  - gopher
   - moose
 namespace:
   key: 'caribou'

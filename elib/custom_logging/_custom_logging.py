@@ -63,7 +63,7 @@ def get_logger(
     :param log_to_file: path to log file [optional]
     :param rotate_logs: whether or not to rotate the log
     :param rotate_log_when: when log rotation should occur
-    :param rotate_log_backup_count: number of logfiles to keep
+    :param rotate_log_backup_count: number of log files to keep
     :param console_level: level for console logging
     :param file_level: level for file logging
     :param console_format: console formatter string
