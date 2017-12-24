@@ -31,4 +31,3 @@ def test_tts_correct():
     assert not file.exists()
     text_to_speech('some text', file)
     assert (file.exists())
-    assert file.read_bytes() is None
