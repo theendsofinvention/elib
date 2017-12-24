@@ -2,6 +2,17 @@ Changelog
 =========
 
 
+0.1.10 (2017-12-24)
+-------------------
+
+New
+~~~
+- Add TTS. [132nd-etcher]
+- Add tests for random utils. [132nd-etcher]
+- Add random bytes function. [132nd-etcher]
+- Add TTS utils. [132nd-etcher]
+
+
 0.1.9 (2017-12-24)
 ------------------
 
