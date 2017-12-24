@@ -8,3 +8,4 @@ __version__ = get_versions()['version']
 del get_versions
 
 MAIN_LOGGER = get_logger('ELIB')
+MAIN_LOGGER.info(f'ELIB version {__version__}')
