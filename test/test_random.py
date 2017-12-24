@@ -1,8 +1,9 @@
 # coding=utf-8
 
-from hypothesis import strategies as st, given
+from hypothesis import strategies as st
+from hypothesis import given
 
-from elib.custom_random import random_string, random_bytes
+from elib.custom_random import random_bytes, random_string
 
 
 def test_random_str():
@@ -26,4 +27,3 @@ def test_random_bytes():
 @given(length=st.integers(min_value=1, max_value=1024))
 def test_random_string_length(length):
     assert len(random_string(length)) == length
-

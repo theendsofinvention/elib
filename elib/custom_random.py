@@ -3,8 +3,8 @@
 Utilities to obtain random values
 """
 
-import random
 import os
+import random
 import string
 
 
@@ -20,4 +20,13 @@ def random_string(size=6, chars=string.ascii_uppercase + string.digits) -> str:
 
 
 def random_bytes(length=1024):
+    """
+    Creates a random bytes chain
+
+    Args:
+        length: size of the chain
+
+    Returns: bytes
+
+    """
     return os.urandom(length)
