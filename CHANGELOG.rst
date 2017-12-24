@@ -2,6 +2,14 @@ Changelog
 =========
 
 
+0.1.9 (2017-12-24)
+------------------
+
+Fix
+~~~
+- Set custom logger default level to DEBUG. [132nd-etcher]
+
+
 0.1.7 (2017-12-23)
 ------------------
 
