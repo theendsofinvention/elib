@@ -22,7 +22,7 @@ def ensure_path(path: typing.Union[str, Path], must_exit: bool = True) -> Path:
         path = Path(path)
     if must_exit and not path.exists():
         raise FileNotFoundError(str(path.absolute()))
-    return path
+    return path.absolute()
 
 
 def ensure_file(file_path: typing.Union[str, Path], must_exit: bool = True) -> Path:
