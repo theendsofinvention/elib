@@ -3,6 +3,8 @@
 Tests TTS package
 """
 
+import pytest
+
 from pathlib import Path
 
 from elib.tts import text_to_speech
@@ -34,3 +36,5 @@ def test_tts_correct():
     assert not file.exists()
     text_to_speech('some text', file)
     assert (file.exists())
+    with pytest.raises(FileExistsError):
+        text_to_speech('some text', file)
