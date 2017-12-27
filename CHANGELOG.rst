@@ -2,6 +2,14 @@ Changelog
 =========
 
 
+0.1.17 (2017-12-27)
+-------------------
+
+Changes
+~~~~~~~
+- I'm always working with absolute paths. [132nd-etcher]
+
+
 0.1.16 (2017-12-27)
 -------------------
 
