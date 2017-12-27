@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Tests TTS package
+"""
 
 from pathlib import Path
 

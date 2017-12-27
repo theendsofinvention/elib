@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Tests random package
+"""
 
 from hypothesis import strategies as st
 from hypothesis import given

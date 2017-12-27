@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Config test
+"""
 
 import everett
 import pytest
@@ -9,34 +12,45 @@ from elib.config.property import ConfigProp, _ConfigProp
 
 
 class WrongBaseClass:
+    """
+    Does not inherit BaseConfig
+    """
     @ConfigProp(str, '')
     def string(self):
+        """Dummy prop"""
         pass
 
 
 class DummyConfig(BaseConfig):
+    """Dummy test class for Config"""
     @ConfigProp(bool, False)
     def debug(self):
+        """Dummy prop"""
         pass
 
     @ConfigProp(str, '')
     def string(self):
+        """Dummy prop"""
         pass
 
     @ConfigProp(int, 0)
     def integer(self):
+        """Dummy prop"""
         pass
 
     @ConfigProp(list, None)
     def some_list(self):
+        """Dummy prop"""
         pass
 
     @ConfigProp(str, namespace='namespace')
     def namespace_key(self):
+        """Dummy prop"""
         pass
 
     @ConfigProp(str)
     def no_default(self):
+        """Dummy prop"""
         pass
 
 

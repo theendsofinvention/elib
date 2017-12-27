@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Tests logging package
+"""
 
 import logging
 import logging.handlers
@@ -12,6 +15,7 @@ from elib.custom_random import random_string
 
 @pytest.fixture(scope='function')
 def setup_logging(caplog):
+    """Provides a logger and the caplog fixture"""
     logger = get_logger(logger_name=random_string(), console_level=logging.DEBUG)
     yield logger, caplog
 
@@ -104,12 +108,12 @@ def test_custom_handler(setup_logging):
 
     result = False
 
-    def callback(*_):
+    def _callback(*_):
         nonlocal result
         result = True
 
     handler = CustomLoggingHandler('handler')
-    handler.emit = callback
+    handler.emit = _callback
 
     handler.register(logger)
 

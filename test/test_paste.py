@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Tests paste package
+"""
 
 import pytest
 from httmock import HTTMock, all_requests, response
@@ -8,11 +11,13 @@ from elib.paste import PasteContent, PasteError, create_new_paste
 
 @all_requests
 def correct_response(*_):
+    """Returns a correct response"""
     return response(200, content={'url': 'content'})
 
 
 @all_requests
 def bad_response(*_):
+    """Returns  a bad response"""
     return response(500, content={'reason': 'reason'})
 
 
