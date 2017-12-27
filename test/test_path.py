@@ -18,3 +18,25 @@ def test_path():
         elib.path.ensure_path(path_str)
     with pytest.raises(FileNotFoundError):
         elib.path.ensure_path(path_test)
+
+
+def test_dir():
+    test = Path('./test')
+    assert isinstance(elib.path.ensure_dir(test, must_exit=False), Path)
+    test.touch()
+    with pytest.raises(TypeError):
+        elib.path.ensure_dir(test)
+    test.unlink()
+    test.mkdir()
+    assert isinstance(elib.path.ensure_dir(test), Path)
+
+
+def test_file():
+    test = Path('./test')
+    assert isinstance(elib.path.ensure_file(test, must_exit=False), Path)
+    test.mkdir()
+    with pytest.raises(TypeError):
+        elib.path.ensure_file(test)
+    test.rmdir()
+    test.touch()
+    assert isinstance(elib.path.ensure_file(test), Path)
