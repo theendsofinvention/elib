@@ -3,6 +3,7 @@
 Manages TTS utilities
 """
 import typing
+import elib.path
 from pathlib import Path
 
 import gtts
@@ -25,9 +26,7 @@ def text_to_speech(text: str, file_path: typing.Union[str, Path], overwrite: boo
 
     """
     LOGGER.debug(f'{text}\n->{file_path}')
-    if isinstance(file_path, str):
-        LOGGER.debug('converting file path to Path')
-        file_path = Path(file_path)
+    file_path = elib.path.ensure_path(file_path, must_exit=False)
     if file_path.exists() and not overwrite:
         LOGGER.error(f'"{file_path}" already exists')
         raise FileExistsError(file_path)
