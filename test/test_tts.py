@@ -3,9 +3,9 @@
 Tests TTS package
 """
 
-import pytest
-
 from pathlib import Path
+
+import pytest
 
 from elib.tts import text_to_speech
 

@@ -3,11 +3,11 @@
 Manages TTS utilities
 """
 import typing
-import elib.path
 from pathlib import Path
 
 import gtts
 
+import elib.path
 from elib import MAIN_LOGGER
 
 LOGGER = MAIN_LOGGER.getChild(__name__)
