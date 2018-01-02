@@ -7,10 +7,10 @@ from pathlib import Path
 
 import gtts
 
+import elib.custom_logging
 import elib.path
-from elib import MAIN_LOGGER
 
-LOGGER = MAIN_LOGGER.getChild(__name__)
+LOGGER = elib.custom_logging.get_logger('ELIB').getChild(__name__)
 
 
 def text_to_speech(text: str, file_path: typing.Union[str, Path], overwrite: bool = False) -> Path:

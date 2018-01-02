@@ -9,9 +9,9 @@ from collections import namedtuple
 
 import requests
 
-from elib import MAIN_LOGGER
+import elib.custom_logging
 
-LOGGER = MAIN_LOGGER.getChild(__name__)
+LOGGER = elib.custom_logging.get_logger('ELIB').getChild(__name__)
 
 BASE_URL = 'https://snippets.glot.io/snippets'
 
