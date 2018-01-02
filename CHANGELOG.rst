@@ -2,6 +2,18 @@ Changelog
 =========
 
 
+0.1.18 (2018-01-02)
+-------------------
+
+New
+~~~
+- Add console utilities. [132nd-etcher]
+
+Fix
+~~~
+- Linting. [132nd-etcher]
+
+
 0.1.17 (2017-12-27)
 -------------------
 
