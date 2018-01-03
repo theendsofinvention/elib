@@ -16,7 +16,6 @@ def ensure_path(path: typing.Union[str, Path], must_exist: bool = True) -> Path:
         must_exist: if True, raises FileNotFoundError when path does not exist
 
     Returns: Path instance
-
     """
     if isinstance(path, str):
         path = Path(path)
