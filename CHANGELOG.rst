@@ -2,6 +2,14 @@ Changelog
 =========
 
 
+0.1.19 (2018-01-02)
+-------------------
+
+Changes
+~~~~~~~
+- Export all modules in the package. [132nd-etcher]
+
+
 0.1.18 (2018-01-02)
 -------------------
 
