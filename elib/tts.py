@@ -26,7 +26,7 @@ def text_to_speech(text: str, file_path: typing.Union[str, Path], overwrite: boo
 
     """
     LOGGER.debug(f'{text}\n->{file_path}')
-    file_path = elib.path.ensure_path(file_path, must_exit=False)
+    file_path = elib.path.ensure_path(file_path, must_exist=False)
     if file_path.exists() and not overwrite:
         LOGGER.error(f'"{file_path}" already exists')
         raise FileExistsError(file_path)

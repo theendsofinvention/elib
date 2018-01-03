@@ -13,7 +13,7 @@ import elib.path
 def test_path():
     path_str = './test'
     path_test = Path('./test')
-    assert elib.path.ensure_path(path_str, must_exit=False) == elib.path.ensure_path(path_test, must_exit=False)
+    assert elib.path.ensure_path(path_str, must_exist=False) == elib.path.ensure_path(path_test, must_exist=False)
     with pytest.raises(FileNotFoundError):
         elib.path.ensure_path(path_str)
     with pytest.raises(FileNotFoundError):
@@ -22,7 +22,7 @@ def test_path():
 
 def test_dir():
     test = Path('./test')
-    assert isinstance(elib.path.ensure_dir(test, must_exit=False), Path)
+    assert isinstance(elib.path.ensure_dir(test, must_exist=False), Path)
     test.touch()
     with pytest.raises(TypeError):
         elib.path.ensure_dir(test)
@@ -33,7 +33,7 @@ def test_dir():
 
 def test_file():
     test = Path('./test')
-    assert isinstance(elib.path.ensure_file(test, must_exit=False), Path)
+    assert isinstance(elib.path.ensure_file(test, must_exist=False), Path)
     test.mkdir()
     with pytest.raises(TypeError):
         elib.path.ensure_file(test)
