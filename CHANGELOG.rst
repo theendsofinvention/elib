@@ -2,6 +2,19 @@ Changelog
 =========
 
 
+(unreleased)
+------------
+
+Fix
+~~~
+- Fix that darn "must_exit" typo (finally) [132nd-etcher]
+
+Other
+~~~~~
+- Merge remote-tracking branch 'origin/develop' into develop. [132nd-
+  etcher]
+
+
 0.1.19 (2018-01-02)
 -------------------
 
