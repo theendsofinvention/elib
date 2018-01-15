@@ -9,7 +9,7 @@ import logging
 LOGGER = logging.getLogger('ELIB')
 
 
-def set_title(title: str):
+def set_title(title: str):  # pragma: no cover
     """
     Sets the console title
 
