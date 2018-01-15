@@ -4,10 +4,9 @@ Utilities to control the console window
 """
 
 import ctypes
+import logging
 
-import elib.custom_logging
-
-LOGGER = elib.custom_logging.get_logger('ELIB').getChild(__name__)
+LOGGER = logging.getLogger('ELIB')
 
 
 def set_title(title: str):

@@ -4,14 +4,13 @@ Creates a snippet at glot.io for text sharing
 """
 
 import json
+import logging
 import typing
 from collections import namedtuple
 
 import requests
 
-import elib.custom_logging
-
-LOGGER = elib.custom_logging.get_logger('ELIB').getChild(__name__)
+LOGGER = logging.getLogger('ELIB')
 
 BASE_URL = 'https://snippets.glot.io/snippets'
 
