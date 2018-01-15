@@ -42,7 +42,7 @@ def ensure_file(file_path: typing.Union[str, Path], must_exist: bool = True) -> 
     return file_path
 
 
-def ensure_dir(dir_path: typing.Union[str, Path], must_exist: bool = True) -> Path:
+def ensure_dir(dir_path: typing.Union[str, Path], must_exist: bool = True, create=False) -> Path:
     """
     Ensure path is a Path instance
 
@@ -57,4 +57,7 @@ def ensure_dir(dir_path: typing.Union[str, Path], must_exist: bool = True) -> Pa
     if dir_path.exists():
         if not dir_path.is_dir():
             raise TypeError(f'not a file: {str(dir_path.absolute())}')
+    else:
+        if create:
+            dir_path.mkdir(parents=True)
     return dir_path
