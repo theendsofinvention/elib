@@ -40,3 +40,21 @@ def test_file():
     test.rmdir()
     test.touch()
     assert isinstance(elib.path.ensure_file(test), Path)
+
+
+@pytest.mark.parametrize('first', ['some', Path('some')])
+@pytest.mark.parametrize('second', ['path', Path('path')])
+@pytest.mark.parametrize('third', ['here', Path('here')])
+def test_args(first, second, third):
+    test = elib.path.ensure_path(first, second, third, must_exist=False)
+    assert isinstance(test, Path)
+    assert test == Path('some/path/here').absolute()
+
+
+def test_dir_create():
+    path = 'some.dir'
+    test = Path(path).absolute()
+    assert not test.exists()
+    result = elib.path.ensure_dir(path, must_exist=False, create=True)
+    assert test.exists()
+    assert test == result
