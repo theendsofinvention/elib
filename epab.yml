@@ -5,6 +5,5 @@ doc:
   folder: './elib'
 
 test:
-  runner_options:
-  av_runner_options:
-    - '--long'
+  runner_options: ''
+  av_runner_options: '--long'

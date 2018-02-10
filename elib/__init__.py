@@ -1,18 +1,15 @@
 """
 Placeholder for future personal library
 """
+from pkg_resources import DistributionNotFound, get_distribution
 
-from . import console
-from . import path
-from . import tts
-from . import paste
-from . import config
-from . import custom_random
-from ._version import get_versions
-from . import custom_logging
+from . import config, console, custom_logging, custom_random, paste, path, tts
 
-__version__ = get_versions()['version']
-del get_versions
+try:
+    __version__ = get_distribution('esst').version
+except DistributionNotFound:  # pragma: no cover
+    # package is not installed
+    __version__ = 'not installed'
 
 MAIN_LOGGER = custom_logging.get_logger('ELIB')
 MAIN_LOGGER.info(f'ELIB version {__version__}')

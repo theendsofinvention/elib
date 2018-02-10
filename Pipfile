@@ -22,4 +22,3 @@ gtts = "*"
 
 epab = "*"
 httmock = "*"
-"e1839a8" = {path = ".", editable = true}

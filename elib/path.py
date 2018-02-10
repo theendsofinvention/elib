@@ -60,7 +60,7 @@ def ensure_dir(*dir_path: typing.Union[str, Path], must_exist: bool = True, crea
     dir_path = ensure_path(*dir_path, must_exist=must_exist)
     if dir_path.exists():
         if not dir_path.is_dir():
-            raise TypeError(f'not a file: {str(dir_path.absolute())}')
+            raise TypeError(f'not a directory: {str(dir_path.absolute())}')
     else:
         if create:
             LOGGER.debug(f'creating directory: {dir_path}')

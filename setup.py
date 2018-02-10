@@ -5,7 +5,6 @@ Etcher's stupid library
 
 import os
 
-import versioneer
 from pip.req import parse_requirements
 from setuptools import find_packages, setup
 
@@ -13,6 +12,22 @@ requirements = [str(r.req) for r in
                 parse_requirements('requirements.txt', session=False)]
 test_requirements = [str(r.req) for r in
                      parse_requirements('requirements-dev.txt', session=False)]
+
+CLASSIFIERS = filter(None, map(str.strip,
+                               """
+Development Status :: 3 - Alpha
+Environment :: Win32 (MS Windows)
+Intended Audience :: Developers
+Natural Language :: English
+Operating System :: Microsoft :: Windows :: Windows 7
+Operating System :: Microsoft :: Windows :: Windows 8
+Operating System :: Microsoft :: Windows :: Windows 8.1
+Operating System :: Microsoft :: Windows :: Windows 10
+License :: OSI Approved :: MIT License
+Programming Language :: Python :: 3.6
+Programming Language :: Python :: 3.7
+Topic :: Utilities
+""".splitlines()))
 
 
 def read_local_files(*file_paths: str) -> str:
@@ -36,7 +51,6 @@ def read_local_files(*file_paths: str) -> str:
 
 setup(
     name='elib',
-    use_scm_version=True,
     zip_safe=False,
     install_requires=requirements,
     tests_require=test_requirements,
@@ -45,21 +59,8 @@ setup(
     test_suite='pytest',
     packages=find_packages(),
     python_requires='>=3.6',
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    use_scm_version=True,
+    setup_requires=['setuptools_scm'],
     license='MIT',
-    classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Environment :: Win32 (MS Windows)',
-        'Intended Audience :: Developers',
-        'Natural Language :: English',
-        'Operating System :: Microsoft :: Windows :: Windows 7',
-        'Operating System :: Microsoft :: Windows :: Windows 8',
-        'Operating System :: Microsoft :: Windows :: Windows 8.1',
-        'Operating System :: Microsoft :: Windows :: Windows 10',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Topic :: Utilities',
-    ],
+    classifiers=CLASSIFIERS,
 )

@@ -16,7 +16,7 @@ from elib.custom_random import random_string
 @pytest.fixture(scope='function')
 def setup_logging(caplog):
     """Provides a logger and the caplog fixture"""
-    logger = get_logger(logger_name=random_string(), console_level=logging.DEBUG)
+    logger = get_logger(logger_name='TEST_LOGGER', console_level=logging.DEBUG)
     yield logger, caplog
 
 
@@ -47,11 +47,11 @@ def test_double_instantiation():
 ])
 def test_logger_levels(setup_logging, levels):
     logger, caplog = setup_logging
-    caplog.set_level(levels[1])
+    caplog.set_level(levels[1], logger='TEST_LOGGER')
     out_func = getattr(logger, levels[2])
     out_func('test_message_debug')
     assert 'test_message_debug' not in caplog.text
-    caplog.set_level(levels[0])
+    caplog.set_level(levels[0], logger='TEST_LOGGER')
     out_func('test_message_debug')
     assert 'test_message_debug' in caplog.text
 
