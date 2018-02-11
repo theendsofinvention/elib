@@ -4,6 +4,7 @@ Placeholder for future personal library
 from pkg_resources import DistributionNotFound, get_distribution
 
 from . import config, console, custom_logging, custom_random, paste, path, tts
+from ._run import run
 
 try:
     __version__ = get_distribution('elib').version
