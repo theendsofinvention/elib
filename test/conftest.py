@@ -6,6 +6,7 @@ import os
 import sys
 
 import pytest
+from mockito import unstub
 
 
 # noinspection PyUnusedLocal
@@ -31,6 +32,13 @@ def cleandir(request, tmpdir):
         os.chdir(str(tmpdir))
         yield os.getcwd()
         os.chdir(current_dir)
+
+
+@pytest.fixture(autouse=True)
+def _unstub():
+    unstub()
+    yield
+    unstub()
 
 
 def pytest_addoption(parser):
