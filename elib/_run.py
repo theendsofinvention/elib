@@ -36,10 +36,12 @@ def _search_paths(paths, executable):
     for path_ in paths:
         executable_path = Path(path_, executable).absolute()
         if executable_path.is_file():
-            return executable_path
+            break
     else:
         cmd_end(f' -> not found')
         return None
+
+    return executable_path
 
 
 def find_executable(executable: str, *paths: str) -> typing.Optional[Path]:  # noqa: C901
