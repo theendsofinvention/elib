@@ -18,7 +18,6 @@ KNOWN_EXECUTABLES = {}
 
 
 def _append_exe(executable):
-
     if not executable.endswith('.exe'):
         return f'{executable}.exe'
 
@@ -26,7 +25,6 @@ def _append_exe(executable):
 
 
 def _set_paths(*paths: str):
-
     if not paths:
         path = os.environ['PATH']
         paths = [Path(sys.exec_prefix, 'Scripts').absolute()] + path.split(os.pathsep)
@@ -174,6 +172,29 @@ def _process_run_result(process, mute, exe_short, failure_ok, result) -> typing.
     return result, process.return_code
 
 
+def _prepare_run_setup_filters(filters):
+    if filters and isinstance(filters, str):
+        filters = [filters]
+
+    return filters
+
+
+def _prepare_run_find_exe(cmd, *paths):
+    exe = find_executable(cmd.split(' ')[0], *paths)
+    if not exe:
+        exit(-1)
+    return exe
+
+
+def _prepare_run_advertise(mute, cmd):
+    mute = mute and not ELIBSettings.verbose
+
+    if mute:
+        cmd_start(f'RUNNING: {cmd}')
+    else:
+        info(f'RUNNING: {cmd}')
+
+
 def run(
         cmd: str,
         *paths: str,
@@ -196,22 +217,14 @@ def run(
     Returns: command output
     """
 
-    if filters and isinstance(filters, str):
-        filters = [filters]
+    filters = _prepare_run_setup_filters(filters)
 
-    exe = find_executable(cmd.split(' ')[0], *paths)
-    if not exe:
-        exit(-1)
+    exe = _prepare_run_find_exe(cmd, *paths)
     exe_short = exe.name
 
     cmd = ' '.join([f'"{exe.absolute()}"'] + cmd.split(' ')[1:])
 
-    mute = mute and not ELIBSettings.verbose
-
-    if mute:
-        cmd_start(f'RUNNING: {cmd}')
-    else:
-        info(f'RUNNING: {cmd}')
+    _prepare_run_advertise(mute, cmd)
 
     process = delegator.run(cmd, block=True, cwd=cwd, binary=False)
     result = _parse_output(process, filters)
