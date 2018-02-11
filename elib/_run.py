@@ -17,6 +17,33 @@ from elib.settings import ELIBSettings
 KNOWN_EXECUTABLES = {}
 
 
+def _append_exe(executable):
+
+    if not executable.endswith('.exe'):
+        return f'{executable}.exe'
+
+    return executable
+
+
+def _set_paths(*paths: str):
+
+    if not paths:
+        path = os.environ['PATH']
+        paths = [Path(sys.exec_prefix, 'Scripts').absolute()] + path.split(os.pathsep)
+
+    return paths
+
+
+def _search_paths(paths, executable):
+    for path_ in paths:
+        executable_path = Path(path_, executable).absolute()
+        if executable_path.is_file():
+            return executable_path
+    else:
+        cmd_end(f' -> not found')
+        return None
+
+
 def find_executable(executable: str, *paths: str) -> typing.Optional[Path]:  # noqa: C901
     # noinspection SpellCheckingInspection
     """
@@ -39,26 +66,22 @@ def find_executable(executable: str, *paths: str) -> typing.Optional[Path]:  # n
 
     """
 
-    if not executable.endswith('.exe'):
-        executable = f'{executable}.exe'
+    executable = _append_exe(executable)
 
     if executable in ELIBSettings.known_executables:  # type: ignore
         return ELIBSettings.known_executables[executable]  # type: ignore
 
     cmd_start(f'Looking for executable: {executable}')
 
-    if not paths:
-        path = os.environ['PATH']
-        paths = [Path(sys.exec_prefix, 'Scripts').absolute()] + path.split(os.pathsep)
+    paths = _set_paths(*paths)
+
     executable_path = Path(executable)
     if not executable_path.is_file():
-        for path_ in paths:
-            executable_path = Path(path_, executable).absolute()
-            if executable_path.is_file():
-                break
-        else:
-            cmd_end(f' -> not found')
-            return None
+        executable_path = _search_paths(paths, executable)
+
+    if executable_path is None:
+        cmd_end(f' -> not found')
+        return None
 
     ELIBSettings.known_executables[executable] = executable_path
     cmd_end(f' -> {click.format_filename(str(executable_path))}')
