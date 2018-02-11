@@ -121,25 +121,55 @@ def _parse_output(process, filters):
     return '\n'.join(result)
 
 
+def _process_run_error(
+        mute,
+        result,
+        failure_ok,
+        process,
+        exe_short
+):
+    if mute:
+        cmd_end('')
+    error(f'command failed: {exe_short} -> {process.return_code}')
+    if result:
+        std_err(f'{exe_short} error:\n{result}')
+        if not result.endswith('\n'):  # pragma: no cover
+            print()
+    if not failure_ok:
+        exit(process.return_code)
+
+
+def _process_run_success(
+        mute,
+        result,
+        process,
+        exe_short
+):
+    if mute:
+        cmd_end(f' -> {process.return_code}')
+    else:
+        std_out(result)
+        if not result.endswith('\n'):  # pragma: no cover
+            print()
+        info(f'{exe_short} -> {process.return_code}')
+
+
 def _process_run_result(process, mute, exe_short, failure_ok, result) -> typing.Tuple[str, int]:
     if process.return_code:
-        if mute:
-            cmd_end('')
-        error(f'command failed: {exe_short} -> {process.return_code}')
-        if result:
-            std_err(f'{exe_short} error:\n{result}')
-            if not result.endswith('\n'):  # pragma: no cover
-                print()
-        if not failure_ok:
-            exit(process.return_code)
+        _process_run_error(
+            mute=mute,
+            result=result,
+            failure_ok=failure_ok,
+            process=process,
+            exe_short=exe_short,
+        )
     else:
-        if mute:
-            cmd_end(f' -> {process.return_code}')
-        else:
-            std_out(result)
-            if not result.endswith('\n'):  # pragma: no cover
-                print()
-            info(f'{exe_short} -> {process.return_code}')
+        _process_run_success(
+            mute=mute,
+            result=result,
+            process=process,
+            exe_short=exe_short,
+        )
 
     return result, process.return_code
 
