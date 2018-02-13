@@ -9,14 +9,13 @@ from pathlib import Path
 
 import pytest
 
-from elib.custom_logging import CustomLoggingHandler, get_logger
-from elib.custom_random import random_string
+import elib
 
 
 @pytest.fixture(scope='function')
 def setup_logging(caplog):
     """Provides a logger and the caplog fixture"""
-    logger = get_logger(logger_name='TEST_LOGGER', console_level=logging.DEBUG)
+    logger = elib.custom_logging.get_logger(logger_name='TEST_LOGGER', console_level=logging.DEBUG)
     yield logger, caplog
 
 
@@ -28,13 +27,13 @@ def test_logger(setup_logging):
     caplog.set_level(logging.DEBUG)
     logger.info('test_message_debug')
     assert 'test_message_debug' in caplog.text
-    assert get_logger(logger.name) is logging.getLogger(logger.name)
+    assert elib.custom_logging.get_logger(logger.name) is logging.getLogger(logger.name)
 
 
 # noinspection PyShadowingNames
 def test_double_instantiation():
-    first_logger = get_logger('test_logger')
-    second_logger = get_logger('test_logger')
+    first_logger = elib.custom_logging.get_logger('test_logger')
+    second_logger = elib.custom_logging.get_logger('test_logger')
     assert first_logger is second_logger
 
 
@@ -69,7 +68,7 @@ def test_logger_not_set(setup_logging, level):
 def test_file_handler():
     log_file = Path('./log.file')
     assert not log_file.exists()
-    logger = get_logger(random_string(), log_to_file=str(log_file))
+    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(), log_to_file=str(log_file))
     logger.warning('test')
     assert log_file.exists()
     assert 'test' in log_file.read_text()
@@ -78,7 +77,8 @@ def test_file_handler():
 def test_file_handler_levels():
     log_file = Path('./log.file')
     assert not log_file.exists()
-    logger = get_logger(random_string(), log_to_file=str(log_file), file_level=logging.ERROR)
+    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(),
+                                            log_to_file=str(log_file), file_level=logging.ERROR)
     logger.warning('test')
     assert log_file.exists()
     assert 'test' not in log_file.read_text()
@@ -87,7 +87,8 @@ def test_file_handler_levels():
 def test_rotating_file_handler():
     log_file = Path('./log.file', )
     assert not log_file.exists()
-    logger = get_logger(random_string(), log_to_file=str(log_file), rotate_logs=True)
+    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(),
+                                            log_to_file=str(log_file), rotate_logs=True)
     logger.warning('test')
     assert log_file.exists()
     assert 'test' in log_file.read_text()
@@ -112,10 +113,50 @@ def test_custom_handler(setup_logging):
         nonlocal result
         result = True
 
-    handler = CustomLoggingHandler('handler')
+    handler = elib.custom_logging.CustomLoggingHandler('handler')
     handler.emit = _callback
 
     handler.register(logger)
 
     logger.info('test')
     assert result
+
+
+@pytest.mark.parametrize(
+    'level',
+    [logging.DEBUG, logging.INFO, logging.ERROR, logging.WARN, logging.CRITICAL]
+)
+def test_console_handler_level(level):
+    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(4))
+    elib.custom_logging.set_handler_level(logger.name, 'ch', level)
+
+    for handler in logger.handlers:
+        assert handler.level is level
+
+    handler = elib.custom_logging.CustomLoggingHandler('handler')
+    handler.register(logger)
+
+    elib.custom_logging.set_handler_level(logger.name, 'handler', level)
+
+    for handler in logger.handlers:
+        assert handler.level is level
+
+
+def test_console_handler_levelas_string():
+    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(4))
+
+    elib.custom_logging.set_handler_level(logger.name, 'ch', 'critical')
+    for handler in logger.handlers:
+        assert handler.level is logging.CRITICAL
+
+    elib.custom_logging.set_handler_level(logger.name, 'ch', 'debug')
+    for handler in logger.handlers:
+        assert handler.level is logging.DEBUG
+
+    elib.custom_logging.set_handler_level(logger.name, 'ch', 'WaRN')
+    for handler in logger.handlers:
+        assert handler.level is logging.WARN
+
+    elib.custom_logging.set_handler_level(logger.name, 'ch', 'err')
+    for handler in logger.handlers:
+        assert handler.level is logging.ERROR
