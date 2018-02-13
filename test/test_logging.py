@@ -160,3 +160,13 @@ def test_console_handler_levelas_string():
     elib.custom_logging.set_handler_level(logger.name, 'ch', 'err')
     for handler in logger.handlers:
         assert handler.level is logging.ERROR
+
+
+def test_removal_of_log_file():
+    log_file = Path('./log_file')
+    log_file.write_text('dummy content')
+    logger =  elib.custom_logging.get_logger(elib.custom_random.random_string(4), log_to_file=log_file.absolute())
+    assert f'added file logging handler: {log_file.absolute()}' in log_file.read_text()
+    assert not 'dummy content' in log_file.read_text()
+    logger.debug('some text')
+    assert 'some text' in log_file.read_text()

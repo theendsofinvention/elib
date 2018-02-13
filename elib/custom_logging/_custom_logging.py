@@ -7,6 +7,7 @@ import abc
 import logging as base
 import logging.handlers as base_handlers
 import sys
+from pathlib import Path
 
 # noinspection SpellCheckingInspection
 DEFAULT_FORMAT = '%(asctime)s %(levelname)8s %(name)s[%(lineno)d].%(funcName)s: %(message)s'
@@ -88,6 +89,8 @@ def _setup_file_logging(logger: base.Logger,
             encoding='utf8',
         )
     else:
+        if Path(log_to_file).exists():
+            Path(log_to_file).unlink()
         file_handler = base.FileHandler(
             filename=log_to_file,
             encoding='utf8'
