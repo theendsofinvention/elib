@@ -2,5 +2,4 @@
 """
 Convenience functions to manage logging
 """
-from ._custom_handler import CustomLoggingHandler
-from ._custom_logging import get_logger
+from ._custom_logging import get_logger, CustomLoggingHandler, set_handler_level
