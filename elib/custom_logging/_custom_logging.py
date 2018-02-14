@@ -10,7 +10,16 @@ import sys
 from pathlib import Path
 
 # noinspection SpellCheckingInspection
-DEFAULT_FORMAT = '%(asctime)s %(levelname)8s %(name)s[%(lineno)d].%(funcName)s: %(message)s'
+DEFAULT_CONSOLE_FORMAT = '%(relativeCreated)08d ms ' \
+                         '%(levelname)8s ' \
+                         '%(name)s ' \
+                         '%(message)s'
+
+DEFAULT_FILE_FORMAT = '%(asctime)s %(levelname)8s %(name)s ' \
+                      '%(process)d %(processName)s ' \
+                      '%(thread)d %(threadName)s ' \
+                      '%(pathname)s[%(lineno)d].%(funcName)s: ' \
+                      '%(message)s'
 _LOGGERS = {}
 
 LEVELS = {
@@ -117,8 +126,8 @@ def get_logger(
         rotate_log_backup_count: int = 7,
         console_level=base.DEBUG,
         file_level=base.DEBUG,
-        console_format=DEFAULT_FORMAT,
-        file_format=DEFAULT_FORMAT,
+        console_format=DEFAULT_CONSOLE_FORMAT,
+        file_format=DEFAULT_FILE_FORMAT,
 ) -> base.Logger:
     """
     Set up the logger
