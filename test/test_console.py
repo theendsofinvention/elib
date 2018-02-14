@@ -5,12 +5,11 @@ Pass
 
 import string
 
+import elib.console
 import pytest
+from elib.settings import ELIBSettings
 from hypothesis import given
 from hypothesis import strategies as st
-
-import elib.console
-from elib.settings import ELIBSettings
 
 
 @given(text=st.text())

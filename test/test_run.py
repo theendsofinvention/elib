@@ -3,14 +3,13 @@
 import string
 
 import delegator
+import elib._run
 import pexpect
 import pytest
+from elib._run import filter_line
 from hypothesis import given
 from hypothesis import strategies as st
 from mockito import mock, unstub, verify, when
-
-import elib._run
-from elib._run import filter_line
 
 
 @pytest.fixture(name='process', autouse=True)
