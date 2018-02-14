@@ -125,7 +125,7 @@ def get_logger(
         rotate_logs: bool = False,
         rotate_log_when: str = 'midnight',
         rotate_log_backup_count: int = 7,
-        console_level=base.DEBUG,
+        console_level=base.ERROR,
         file_level=base.DEBUG,
         console_format=DEFAULT_CONSOLE_FORMAT,
         file_format=DEFAULT_FILE_FORMAT,
