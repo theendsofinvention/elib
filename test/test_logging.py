@@ -66,29 +66,30 @@ def test_logger_not_set(setup_logging, level):
 
 
 def test_file_handler():
-    log_file = Path('./log.file')
+    logger_name = elib.custom_random.random_string()
+    log_file = Path(f'./{logger_name}.log')
     assert not log_file.exists()
-    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(), log_to_file=str(log_file))
+    logger = elib.custom_logging.get_logger(logger_name)
     logger.warning('test')
     assert log_file.exists()
     assert 'test' in log_file.read_text()
 
 
 def test_file_handler_levels():
-    log_file = Path('./log.file')
+    logger_name = elib.custom_random.random_string()
+    log_file = Path(f'./{logger_name}.log')
     assert not log_file.exists()
-    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(),
-                                            log_to_file=str(log_file), file_level=logging.ERROR)
+    logger = elib.custom_logging.get_logger(logger_name, file_level=logging.ERROR)
     logger.warning('test')
     assert log_file.exists()
     assert 'test' not in log_file.read_text()
 
 
 def test_rotating_file_handler():
-    log_file = Path('./log.file', )
+    logger_name = elib.custom_random.random_string()
+    log_file = Path(f'./{logger_name}.log')
     assert not log_file.exists()
-    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(),
-                                            log_to_file=str(log_file), rotate_logs=True)
+    logger = elib.custom_logging.get_logger(logger_name, rotate_logs=True)
     logger.warning('test')
     assert log_file.exists()
     assert 'test' in log_file.read_text()
@@ -129,6 +130,7 @@ def test_custom_handler(setup_logging):
 def test_console_handler_level(level):
     logger = elib.custom_logging.get_logger(elib.custom_random.random_string(4))
     elib.custom_logging.set_handler_level(logger.name, 'ch', level)
+    elib.custom_logging.set_handler_level(logger.name, 'fh', level)
 
     for handler in logger.handlers:
         assert handler.level is level
@@ -142,31 +144,44 @@ def test_console_handler_level(level):
         assert handler.level is level
 
 
-def test_console_handler_levelas_string():
+def test_console_handler_level_as_string():
     logger = elib.custom_logging.get_logger(elib.custom_random.random_string(4))
 
     elib.custom_logging.set_handler_level(logger.name, 'ch', 'critical')
+    elib.custom_logging.set_handler_level(logger.name, 'fh', 'critical')
     for handler in logger.handlers:
         assert handler.level is logging.CRITICAL
 
     elib.custom_logging.set_handler_level(logger.name, 'ch', 'debug')
+    elib.custom_logging.set_handler_level(logger.name, 'fh', 'debug')
     for handler in logger.handlers:
         assert handler.level is logging.DEBUG
 
     elib.custom_logging.set_handler_level(logger.name, 'ch', 'WaRN')
+    elib.custom_logging.set_handler_level(logger.name, 'fh', 'warning')
     for handler in logger.handlers:
         assert handler.level is logging.WARN
 
     elib.custom_logging.set_handler_level(logger.name, 'ch', 'err')
+    elib.custom_logging.set_handler_level(logger.name, 'fh', 'error')
     for handler in logger.handlers:
         assert handler.level is logging.ERROR
 
 
 def test_removal_of_log_file():
-    log_file = Path('./log_file')
+    logger_name = elib.custom_random.random_string(4)
+    log_file = Path(f'./{logger_name}.log')
     log_file.write_text('dummy content')
-    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(4), log_to_file=log_file.absolute())
+    logger = elib.custom_logging.get_logger(logger_name)
     assert f'added file logging handler: {log_file.absolute()}' in log_file.read_text()
     assert not 'dummy content' in log_file.read_text()
     logger.debug('some text')
     assert 'some text' in log_file.read_text()
+
+
+def test_no_log_file():
+    logger_name = elib.custom_random.random_string(4)
+    log_file = Path(f'./{logger_name}.log')
+    logger = elib.custom_logging.get_logger(logger_name, log_to_file=False)
+    assert not log_file.exists()
+    assert len(logger.handlers) == 1
