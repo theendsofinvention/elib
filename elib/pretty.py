@@ -23,4 +23,4 @@ def pretty_format(obj, indent=4):
     Returns: formatted text
 
     """
-    return _indent(pprint.pformat(obj), indent=indent)
+    return _indent(pprint.pformat(obj, width=120), indent=indent)
