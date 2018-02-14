@@ -6,9 +6,10 @@ import logging
 import typing
 from pathlib import Path
 
+import gtts
+
 import elib.custom_logging
 import elib.path
-import gtts
 
 LOGGER = logging.getLogger('ELIB')
 

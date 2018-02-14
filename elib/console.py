@@ -7,6 +7,7 @@ import ctypes
 import logging
 
 import click
+
 from elib.settings import ELIBSettings
 
 LOGGER = logging.getLogger('ELIB')

@@ -18,7 +18,6 @@ class BaseConfig:
     """
 
     def __init__(self, package_name: str, default_dict: dict = None):
-
         if default_dict is None:
             default_dict = {}
         self._config = everett.manager.ConfigManager(
