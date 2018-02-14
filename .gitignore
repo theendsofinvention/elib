@@ -12,3 +12,4 @@ htmlcov
 /Pipfile.lock
 /.hypothesis/
 /.pytest_cache/
+*.log

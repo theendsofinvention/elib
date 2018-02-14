@@ -83,25 +83,26 @@ def set_handler_level(logger_name, handler_name, level):
 
 # pylint: disable=too-many-arguments
 def _setup_file_logging(logger: base.Logger,
-                        log_to_file: str,
+                        logger_name: str,
                         rotate_logs: bool,
                         rotate_log_when: str,
                         rotate_log_backup_count: int,
                         file_level,
                         file_format,
                         **_):
+    file_name = Path(f'{logger_name}.log').absolute()
     if rotate_logs:
         file_handler = base_handlers.TimedRotatingFileHandler(
-            filename=log_to_file,
+            filename=file_name,
             when=rotate_log_when,
             backupCount=rotate_log_backup_count,
             encoding='utf8',
         )
     else:
-        if Path(log_to_file).exists():
-            Path(log_to_file).unlink()
+        if Path(file_name).exists():
+            Path(file_name).unlink()
         file_handler = base.FileHandler(
-            filename=log_to_file,
+            filename=file_name,
             encoding='utf8'
         )
 
@@ -110,9 +111,9 @@ def _setup_file_logging(logger: base.Logger,
 
     logger.addHandler(file_handler)
     if rotate_logs:
-        logger.debug(f'added rotating file logging handler: {log_to_file}')
+        logger.debug(f'added rotating file logging handler: {file_name}')
     else:
-        logger.debug(f'added file logging handler: {log_to_file}')
+        logger.debug(f'added file logging handler: {file_name}')
 
     return file_handler
 
@@ -120,7 +121,7 @@ def _setup_file_logging(logger: base.Logger,
 # pylint: disable= unused-argument
 def get_logger(
         logger_name: str,
-        log_to_file: str = None,
+        log_to_file: bool = True,
         rotate_logs: bool = False,
         rotate_log_when: str = 'midnight',
         rotate_log_backup_count: int = 7,
