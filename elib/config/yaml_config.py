@@ -19,6 +19,8 @@ def update_nested_dict(target_dict: collections.MutableMapping,
     :param source_dict: dictionary that contains values to use
     :return: updated target_dict
     """
+    if source_dict is None:
+        return target_dict
     for key, value in source_dict.items():
         if isinstance(value, collections.MutableMapping):
             target_dict[key.upper()] = update_nested_dict(
