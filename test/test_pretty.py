@@ -2,6 +2,7 @@
 
 import elib
 
+
 def test_pretty():
     obj = {
         'test': 'value',

@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Formats an object for representation on the console or in a log
+"""
 
 
 import pprint
