@@ -5,9 +5,8 @@ Tests path package
 
 from pathlib import Path
 
-import pytest
-
 import elib.path
+import pytest
 
 
 def test_path():

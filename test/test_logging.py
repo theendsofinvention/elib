@@ -7,9 +7,8 @@ import logging
 import logging.handlers
 from pathlib import Path
 
-import pytest
-
 import elib
+import pytest
 
 
 @pytest.fixture(scope='function')

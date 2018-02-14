@@ -2,10 +2,10 @@
 """
 Config test
 """
+from pathlib import Path
 
 import everett
 import pytest
-
 from elib.config import BaseConfig
 # noinspection PyProtectedMember
 from elib.config.property import ConfigProp, _ConfigProp
@@ -161,5 +161,10 @@ def test_wrong_base_class():
 
 
 def test_calling_from_instance():
-    print(type(DummyConfig.integer))
     assert isinstance(DummyConfig.integer, _ConfigProp)
+
+
+def test_empty_config_file():
+    Path('./test.yml').touch()
+    cfg = DummyConfig('test')
+    assert cfg.debug is False
