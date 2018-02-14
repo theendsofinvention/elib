@@ -17,6 +17,7 @@ configobj = "*"
 everett = "*"
 pyyaml = "*"
 gtts = "*"
+pytest = "*"
 
 
 [dev-packages]
