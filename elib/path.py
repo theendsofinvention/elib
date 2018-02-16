@@ -3,11 +3,12 @@
 Path utilities
 """
 
-import logging
 import typing
 from pathlib import Path
 
-LOGGER = logging.getLogger('ELIB')
+from elib.custom_logging._custom_logging import get_elib_logger
+
+LOGGER = get_elib_logger()
 
 
 def ensure_path(*path: typing.Union[str, Path], must_exist: bool = True) -> Path:
