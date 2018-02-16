@@ -6,9 +6,7 @@ Path utilities
 import typing
 from pathlib import Path
 
-from elib.custom_logging._custom_logging import get_elib_logger
-
-LOGGER = get_elib_logger()
+from elib import LOGGER
 
 
 def ensure_path(*path: typing.Union[str, Path], must_exist: bool = True) -> Path:

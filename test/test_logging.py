@@ -189,3 +189,13 @@ def test_no_log_file():
     logger = elib.custom_logging.get_logger(logger_name, log_to_file=False)
     assert not log_file.exists()
     assert len(logger.handlers) == 1
+
+
+def test_activate_elib_logging():
+    logger = logging.getLogger('some_logger')
+    handler = logging.StreamHandler()
+    logger.addHandler(handler)
+    elib.custom_logging._custom_logging._ROOT_LOGGER = logger
+    elib.custom_logging.activate_elib_logging()
+    from elib import LOGGER as ELIB_LOGGER
+    assert handler in ELIB_LOGGER.handlers

@@ -8,6 +8,7 @@ import logging as base
 import logging.handlers as base_handlers
 import sys
 from pathlib import Path
+from elib import LOGGER as ELIB_LOGGER
 
 # noinspection SpellCheckingInspection
 DEFAULT_CONSOLE_FORMAT = '%(relativeCreated)08d ms ' \
@@ -181,12 +182,6 @@ def get_logger(
     return logger
 
 
-def get_elib_logger():
-    """
-    Dummy function to get a logger for this lib
-    """
-    for logger_name in _LOGGERS:
-        if 'ELIB' in logger_name:  # pragma: no cover
-            return _LOGGERS[logger_name]['logger']
-
-    return get_logger('ELIB')
+def activate_elib_logging():
+    for handler in _ROOT_LOGGER.handlers:
+        ELIB_LOGGER.addHandler(handler)

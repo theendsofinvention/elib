@@ -8,9 +8,6 @@ import typing
 from collections import namedtuple
 
 import requests
-from elib.custom_logging._custom_logging import get_elib_logger
-
-LOGGER = get_elib_logger()
 
 BASE_URL = 'https://snippets.glot.io/snippets'
 

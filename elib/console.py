@@ -6,10 +6,9 @@ Utilities to control the console window
 import ctypes
 
 import click
-from elib.custom_logging._custom_logging import get_elib_logger
-from elib.settings import ELIBSettings
 
-LOGGER = get_elib_logger()
+from elib import LOGGER
+from elib.settings import ELIBSettings
 
 
 def set_title(title: str):  # pragma: no cover
