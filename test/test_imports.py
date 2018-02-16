@@ -9,13 +9,6 @@ import glob
 
 import pytest
 
-# import emft.__version__
-
-
-# @pytest.fixture(autouse=True)
-# def patch_version(monkeypatch):
-#     monkeypatch.setattr(emft.__version__, '__version__', '0.0.0')
-
 
 # noinspection PyUnresolvedReferences,PyProtectedMember
 @pytest.mark.nocleandir
