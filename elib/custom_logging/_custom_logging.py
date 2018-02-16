@@ -147,7 +147,7 @@ def get_logger(
 
     :return: logger object
     """
-    global _ROOT_LOGGER
+    global _ROOT_LOGGER  # pylint: disable=global-statement
     if logger_name in _LOGGERS:
         _LOGGERS[logger_name]['logger'].debug(f'logger already initialized: {logger_name}')
         return _LOGGERS[logger_name]['logger']
@@ -182,6 +182,9 @@ def get_logger(
 
 
 def get_elib_logger():
+    """
+    Dummy function to get a logger for this lib
+    """
     for logger_name in _LOGGERS:
         if 'ELIB' in logger_name:  # pragma: no cover
             return _LOGGERS[logger_name]['logger']
