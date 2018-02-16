@@ -3,7 +3,7 @@ Placeholder for future personal library
 """
 from pkg_resources import DistributionNotFound, get_distribution
 
-from . import config, console, custom_logging, custom_random, paste, path, tts
+from . import config, console, custom_logging, custom_random, paste, path, tts, settings
 from ._run import run
 from .pretty import pretty_format
 
