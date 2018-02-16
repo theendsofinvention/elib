@@ -10,6 +10,8 @@ from pathlib import Path
 import elib
 import pytest
 
+import elib.custom_logging._custom_logging_handler
+
 
 @pytest.fixture(scope='function')
 def setup_logging(caplog):
@@ -118,7 +120,7 @@ def test_custom_handler(setup_logging):
         nonlocal result
         result = True
 
-    handler = elib.custom_logging.CustomLoggingHandler('handler')
+    handler = elib.custom_logging._custom_logging_handler.CustomLoggingHandler('handler')
     handler.emit = _callback
 
     handler.register(logger)
@@ -139,7 +141,7 @@ def test_handler_level(level):
     for handler in logger.handlers:
         assert handler.level is level
 
-    handler = elib.custom_logging.CustomLoggingHandler('handler')
+    handler = elib.custom_logging._custom_logging_handler.CustomLoggingHandler('handler')
     handler.register(logger)
 
     elib.custom_logging.set_handler_level(logger.name, 'handler', level)

@@ -3,11 +3,11 @@
 Convenience functions to manage logging
 """
 
-import abc
 import logging as base
 import logging.handlers as base_handlers
 import sys
 from pathlib import Path
+
 from elib import LOGGER as ELIB_LOGGER
 
 # noinspection SpellCheckingInspection
@@ -35,40 +35,6 @@ LEVELS = {
     'CRITICAL': base.CRITICAL,
     'CRIT': base.CRITICAL,
 }
-
-
-class CustomLoggingHandler(base.Handler):
-    """
-    Install a handler to redirect all INFO messages (and higher) to the Discord Channel
-    """
-
-    def __init__(self, name: str, level=base.INFO):
-        """
-        Creates a logging Handler
-        :param name: name of this handler
-        :param level: instance of logging.* level
-        """
-        base.Handler.__init__(self, level)
-        self.set_name(name)
-
-    @abc.abstractmethod
-    def emit(self, record: base.LogRecord):
-        """
-        Redirects the record to the Discord channel if its level is INFO or higher
-
-        Args:
-            record: logging.record to emit
-        """
-
-    def register(self, logger: base.Logger):
-        """
-        Registers the handler with an existing logger
-
-        :param logger: logger to attach to
-        """
-        logger.debug(f'registering logging handler: {self.name}')
-        _LOGGERS[logger.name][self.name] = self
-        logger.addHandler(self)
 
 
 def set_handler_level(logger_name, handler_name, level):
