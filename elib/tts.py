@@ -5,9 +5,10 @@ Manages TTS utilities
 import typing
 from pathlib import Path
 
+import gtts
+
 import elib.custom_logging
 import elib.path
-import gtts
 from elib.custom_logging._custom_logging import get_elib_logger
 
 LOGGER = get_elib_logger()
