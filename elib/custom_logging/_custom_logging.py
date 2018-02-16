@@ -146,7 +146,7 @@ def get_logger(
     :return: logger object
     """
     if logger_name in _LOGGERS:
-        _LOGGERS[logger_name]['logger'].warning(f'logger already initialized: {logger_name}')
+        _LOGGERS[logger_name]['logger'].debug(f'logger already initialized: {logger_name}')
         return _LOGGERS[logger_name]['logger']
 
     kwargs = locals()
