@@ -13,5 +13,6 @@ except DistributionNotFound:  # pragma: no cover
     # package is not installed
     __version__ = 'not installed'
 
-MAIN_LOGGER = custom_logging.get_logger('ELIB')
-MAIN_LOGGER.info(f'ELIB version {__version__}')
+if __package__ == 'elib':  # pragma: no cover
+    LOGGER = custom_logging.get_logger('ELIB')
+    LOGGER.info(f'ELIB version {__version__}')

@@ -179,3 +179,11 @@ def get_logger(
         _LOGGERS[logger.name]['fh'] = file_handler
 
     return logger
+
+
+def get_elib_logger():
+    for logger_name in _LOGGERS:
+        if 'ELIB' in logger_name:  # pragma: no cover
+            return _LOGGERS[logger_name]['logger']
+
+    return get_logger('ELIB')
