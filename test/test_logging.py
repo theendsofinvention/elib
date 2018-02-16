@@ -45,11 +45,13 @@ def test_double_instantiation():
 ])
 def test_logger_levels(setup_logging, levels):
     logger, caplog = setup_logging
-    caplog.set_level(levels[1], logger='TEST_LOGGER')
+    logger.setLevel(levels[1])
+    # caplog.set_level(levels[1], logger='TEST_LOGGER')
     out_func = getattr(logger, levels[2])
     out_func('test_message_debug')
     assert 'test_message_debug' not in caplog.text
-    caplog.set_level(levels[0], logger='TEST_LOGGER')
+    logger.setLevel(levels[0])
+    # caplog.set_level(levels[0], logger='TEST_LOGGER')
     out_func('test_message_debug')
     assert 'test_message_debug' in caplog.text
 
@@ -58,6 +60,7 @@ def test_logger_levels(setup_logging, levels):
 @pytest.mark.parametrize('level', ['debug', 'info', 'warning', 'error', 'critical'])
 def test_logger_not_set(setup_logging, level):
     logger, caplog = setup_logging
+    logger.setLevel(1)
     caplog.set_level(logging.NOTSET)
     out_func = getattr(logger, level)
     out_func('test_message_debug')
@@ -68,7 +71,7 @@ def test_file_handler():
     logger_name = elib.custom_random.random_string()
     log_file = Path(f'./{logger_name}.log')
     assert not log_file.exists()
-    logger = elib.custom_logging.get_logger(logger_name)
+    logger = elib.custom_logging.get_logger(logger_name, log_to_file=True)
     logger.warning('test')
     assert log_file.exists()
     assert 'test' in log_file.read_text()
@@ -78,17 +81,19 @@ def test_file_handler_levels():
     logger_name = elib.custom_random.random_string()
     log_file = Path(f'./{logger_name}.log')
     assert not log_file.exists()
-    logger = elib.custom_logging.get_logger(logger_name, file_level=logging.ERROR)
-    logger.warning('test')
+    logger = elib.custom_logging.get_logger(logger_name, file_level=logging.ERROR, log_to_file=True)
+    logger.warning('__warning__')
+    logger.error('__error__')
     assert log_file.exists()
-    assert 'test' not in log_file.read_text()
+    assert '__warning__' not in log_file.read_text()
+    assert '__error__' in log_file.read_text()
 
 
 def test_rotating_file_handler():
     logger_name = elib.custom_random.random_string()
     log_file = Path(f'./{logger_name}.log')
     assert not log_file.exists()
-    logger = elib.custom_logging.get_logger(logger_name, rotate_logs=True)
+    logger = elib.custom_logging.get_logger(logger_name, rotate_logs=True, log_to_file=True)
     logger.warning('test')
     assert log_file.exists()
     assert 'test' in log_file.read_text()
@@ -126,8 +131,8 @@ def test_custom_handler(setup_logging):
     'level',
     [logging.DEBUG, logging.INFO, logging.ERROR, logging.WARN, logging.CRITICAL]
 )
-def test_console_handler_level(level):
-    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(4))
+def test_handler_level(level):
+    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(4), log_to_file=True)
     elib.custom_logging.set_handler_level(logger.name, 'ch', level)
     elib.custom_logging.set_handler_level(logger.name, 'fh', level)
 
@@ -144,7 +149,7 @@ def test_console_handler_level(level):
 
 
 def test_console_handler_level_as_string():
-    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(4))
+    logger = elib.custom_logging.get_logger(elib.custom_random.random_string(4), log_to_file=True)
 
     elib.custom_logging.set_handler_level(logger.name, 'ch', 'critical')
     elib.custom_logging.set_handler_level(logger.name, 'fh', 'critical')
@@ -171,7 +176,7 @@ def test_removal_of_log_file():
     logger_name = elib.custom_random.random_string(4)
     log_file = Path(f'./{logger_name}.log')
     log_file.write_text('dummy content')
-    logger = elib.custom_logging.get_logger(logger_name)
+    logger = elib.custom_logging.get_logger(logger_name, log_to_file=True)
     assert f'added file logging handler: {log_file.absolute()}' in log_file.read_text()
     assert not 'dummy content' in log_file.read_text()
     logger.debug('some text')

@@ -22,6 +22,8 @@ DEFAULT_FILE_FORMAT = '%(asctime)s %(levelname)8s %(name)s ' \
                       '%(message)s'
 _LOGGERS = {}
 
+_ROOT_LOGGER = None
+
 LEVELS = {
     'DEBUG': base.DEBUG,
     'INFO': base.INFO,
@@ -121,7 +123,7 @@ def _setup_file_logging(logger: base.Logger,
 # pylint: disable= unused-argument
 def get_logger(
         logger_name: str,
-        log_to_file: bool = True,
+        log_to_file: bool = False,
         rotate_logs: bool = False,
         rotate_log_when: str = 'midnight',
         rotate_log_backup_count: int = 7,
@@ -145,12 +147,19 @@ def get_logger(
 
     :return: logger object
     """
+    global _ROOT_LOGGER  # pylint: disable=global-statement
     if logger_name in _LOGGERS:
-        _LOGGERS[logger_name]['logger'].warning(f'logger already initialized: {logger_name}')
+        _LOGGERS[logger_name]['logger'].debug(f'logger already initialized: {logger_name}')
         return _LOGGERS[logger_name]['logger']
 
     kwargs = locals()
-    logger = base.getLogger(logger_name)
+
+    if _ROOT_LOGGER is None:
+        logger = base.getLogger(logger_name)
+        _ROOT_LOGGER = logger
+    else:
+        logger = _ROOT_LOGGER.getChild(logger_name)
+
     logger.setLevel(base.DEBUG)
 
     console_handler = base.StreamHandler(sys.stdout)
@@ -160,13 +169,24 @@ def get_logger(
     logger.addHandler(console_handler)
     logger.debug('added console logging handler')
 
-    _LOGGERS[logger_name] = {
+    _LOGGERS[logger.name] = {
         'logger': logger,
         'ch': console_handler,
     }
 
     if log_to_file:
         file_handler = _setup_file_logging(logger, **kwargs)
-        _LOGGERS[logger_name]['fh'] = file_handler
+        _LOGGERS[logger.name]['fh'] = file_handler
 
     return logger
+
+
+def get_elib_logger():
+    """
+    Dummy function to get a logger for this lib
+    """
+    for logger_name in _LOGGERS:
+        if 'ELIB' in logger_name:  # pragma: no cover
+            return _LOGGERS[logger_name]['logger']
+
+    return get_logger('ELIB')

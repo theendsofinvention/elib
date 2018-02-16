@@ -2,7 +2,6 @@
 """
 Manages TTS utilities
 """
-import logging
 import typing
 from pathlib import Path
 
@@ -10,8 +9,9 @@ import gtts
 
 import elib.custom_logging
 import elib.path
+from elib.custom_logging._custom_logging import get_elib_logger
 
-LOGGER = logging.getLogger('ELIB')
+LOGGER = get_elib_logger()
 
 
 def text_to_speech(text: str, file_path: typing.Union[str, Path], overwrite: bool = False) -> Path:
