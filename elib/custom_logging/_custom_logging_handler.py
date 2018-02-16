@@ -2,7 +2,7 @@
 import abc
 import logging as base
 
-from ._custom_logging import _LOGGERS
+from elib.custom_logging._constants import LOGGERS
 
 
 class CustomLoggingHandler(base.Handler):
@@ -35,5 +35,5 @@ class CustomLoggingHandler(base.Handler):
         :param logger: logger to attach to
         """
         logger.debug(f'registering logging handler: {self.name}')
-        _LOGGERS[logger.name][self.name] = self
+        LOGGERS[logger.name][self.name] = self
         logger.addHandler(self)

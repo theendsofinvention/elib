@@ -10,6 +10,7 @@ from pathlib import Path
 import elib
 import pytest
 
+import elib.custom_logging._constants
 import elib.custom_logging._custom_logging_handler
 
 
@@ -197,7 +198,7 @@ def test_activate_elib_logging():
     logger = logging.getLogger('some_logger')
     handler = logging.StreamHandler()
     logger.addHandler(handler)
-    elib.custom_logging._custom_logging._ROOT_LOGGER = logger
+    elib.custom_logging._constants.ROOT_LOGGER = logger
     elib.custom_logging.activate_elib_logging()
     from elib import LOGGER as ELIB_LOGGER
     assert handler in ELIB_LOGGER.handlers

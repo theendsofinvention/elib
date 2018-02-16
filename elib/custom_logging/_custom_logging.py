@@ -8,33 +8,9 @@ import logging.handlers as base_handlers
 import sys
 from pathlib import Path
 
+from . import _constants
 from elib import LOGGER as ELIB_LOGGER
-
 # noinspection SpellCheckingInspection
-DEFAULT_CONSOLE_FORMAT = '%(relativeCreated)08d ms ' \
-                         '%(levelname)8s ' \
-                         '%(name)s ' \
-                         '%(message)s'
-
-DEFAULT_FILE_FORMAT = '%(asctime)s %(levelname)8s %(name)s ' \
-                      '%(process)d %(processName)s ' \
-                      '%(thread)d %(threadName)s ' \
-                      '%(pathname)s[%(lineno)d].%(funcName)s: ' \
-                      '%(message)s'
-_LOGGERS = {}
-
-_ROOT_LOGGER = None
-
-LEVELS = {
-    'DEBUG': base.DEBUG,
-    'INFO': base.INFO,
-    'WARNING': base.WARN,
-    'WARN': base.WARN,
-    'ERROR': base.ERROR,
-    'ERR': base.ERROR,
-    'CRITICAL': base.CRITICAL,
-    'CRIT': base.CRITICAL,
-}
 
 
 def set_handler_level(logger_name, handler_name, level):
@@ -46,8 +22,8 @@ def set_handler_level(logger_name, handler_name, level):
         level: desired level
     """
     if isinstance(level, str):
-        level = LEVELS[level.upper()]
-    _LOGGERS[logger_name][handler_name].setLevel(level)
+        level = _constants.LEVELS[level.upper()]
+    _constants.LOGGERS[logger_name][handler_name].setLevel(level)
 
 
 # pylint: disable=too-many-arguments
@@ -96,8 +72,8 @@ def get_logger(
         rotate_log_backup_count: int = 7,
         console_level=base.ERROR,
         file_level=base.DEBUG,
-        console_format=DEFAULT_CONSOLE_FORMAT,
-        file_format=DEFAULT_FILE_FORMAT,
+        console_format=_constants.DEFAULT_CONSOLE_FORMAT,
+        file_format=_constants.DEFAULT_FILE_FORMAT,
 ) -> base.Logger:
     """
     Set up the logger
@@ -114,18 +90,17 @@ def get_logger(
 
     :return: logger object
     """
-    global _ROOT_LOGGER  # pylint: disable=global-statement
-    if logger_name in _LOGGERS:
-        _LOGGERS[logger_name]['logger'].debug(f'logger already initialized: {logger_name}')
-        return _LOGGERS[logger_name]['logger']
+    if logger_name in _constants.LOGGERS:
+        _constants.LOGGERS[logger_name]['logger'].debug(f'logger already initialized: {logger_name}')
+        return _constants.LOGGERS[logger_name]['logger']
 
     kwargs = locals()
 
-    if _ROOT_LOGGER is None:
+    if _constants.ROOT_LOGGER is None:
         logger = base.getLogger(logger_name)
-        _ROOT_LOGGER = logger
+        _constants.ROOT_LOGGER = logger
     else:
-        logger = _ROOT_LOGGER.getChild(logger_name)
+        logger = _constants.ROOT_LOGGER.getChild(logger_name)
 
     logger.setLevel(base.DEBUG)
 
@@ -136,14 +111,14 @@ def get_logger(
     logger.addHandler(console_handler)
     logger.debug('added console logging handler')
 
-    _LOGGERS[logger.name] = {
+    _constants.LOGGERS[logger.name] = {
         'logger': logger,
         'ch': console_handler,
     }
 
     if log_to_file:
         file_handler = _setup_file_logging(logger, **kwargs)
-        _LOGGERS[logger.name]['fh'] = file_handler
+        _constants.LOGGERS[logger.name]['fh'] = file_handler
 
     return logger
 
@@ -152,5 +127,5 @@ def activate_elib_logging():
     """
     Attaches all handlers of the root logger to the ELIB logger
     """
-    for handler in _ROOT_LOGGER.handlers:
+    for handler in _constants.ROOT_LOGGER.handlers:
         ELIB_LOGGER.addHandler(handler)
