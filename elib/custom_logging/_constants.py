@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Logging constants
+"""
 import logging as base
 
 DEFAULT_CONSOLE_FORMAT = '%(relativeCreated)08d ms ' \

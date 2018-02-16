@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Install a handler to redirect all INFO messages (and higher) to the Discord Channel
+"""
 import abc
 import logging as base
 
