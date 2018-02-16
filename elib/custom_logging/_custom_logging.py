@@ -183,5 +183,8 @@ def get_logger(
 
 
 def activate_elib_logging():
+    """
+    Attaches all handlers of the root logger to the ELIB logger
+    """
     for handler in _ROOT_LOGGER.handlers:
         ELIB_LOGGER.addHandler(handler)
