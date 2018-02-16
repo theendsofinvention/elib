@@ -121,7 +121,7 @@ def _setup_file_logging(logger: base.Logger,
 # pylint: disable= unused-argument
 def get_logger(
         logger_name: str,
-        log_to_file: bool = True,
+        log_to_file: bool = False,
         rotate_logs: bool = False,
         rotate_log_when: str = 'midnight',
         rotate_log_backup_count: int = 7,
