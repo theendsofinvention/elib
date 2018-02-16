@@ -22,6 +22,8 @@ DEFAULT_FILE_FORMAT = '%(asctime)s %(levelname)8s %(name)s ' \
                       '%(message)s'
 _LOGGERS = {}
 
+_ROOT_LOGGER = None
+
 LEVELS = {
     'DEBUG': base.DEBUG,
     'INFO': base.INFO,
@@ -145,12 +147,19 @@ def get_logger(
 
     :return: logger object
     """
+    global _ROOT_LOGGER
     if logger_name in _LOGGERS:
         _LOGGERS[logger_name]['logger'].debug(f'logger already initialized: {logger_name}')
         return _LOGGERS[logger_name]['logger']
 
     kwargs = locals()
-    logger = base.getLogger(logger_name)
+
+    if _ROOT_LOGGER is None:
+        logger = base.getLogger(logger_name)
+        _ROOT_LOGGER = logger
+    else:
+        logger = _ROOT_LOGGER.getChild(logger_name)
+
     logger.setLevel(base.DEBUG)
 
     console_handler = base.StreamHandler(sys.stdout)
@@ -160,13 +169,13 @@ def get_logger(
     logger.addHandler(console_handler)
     logger.debug('added console logging handler')
 
-    _LOGGERS[logger_name] = {
+    _LOGGERS[logger.name] = {
         'logger': logger,
         'ch': console_handler,
     }
 
     if log_to_file:
         file_handler = _setup_file_logging(logger, **kwargs)
-        _LOGGERS[logger_name]['fh'] = file_handler
+        _LOGGERS[logger.name]['fh'] = file_handler
 
     return logger
