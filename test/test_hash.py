@@ -8,7 +8,10 @@ import elib
 def test_get_hash_from_string():
     test_string = 'this is some dummy test string'
     assert elib.hash_.get_hash(test_string) == 'f4c8f848b02d640c75a2385fd315412b'
-    assert elib.hash_.get_hash(test_string, 'sha256') == '556d2c0500f5e1e40925e65d16cc3c46006006e88ffc5051fb3a7f7c1b6af9b1'
+    assert elib.hash_.get_hash(
+        test_string,
+        'sha256'
+    ) == '556d2c0500f5e1e40925e65d16cc3c46006006e88ffc5051fb3a7f7c1b6af9b1'
 
 
 def test_get_hash_from_file():
