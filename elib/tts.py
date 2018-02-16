@@ -9,9 +9,7 @@ import gtts
 
 import elib.custom_logging
 import elib.path
-from elib.custom_logging._custom_logging import get_elib_logger
-
-LOGGER = get_elib_logger()
+from elib import LOGGER
 
 
 def text_to_speech(text: str, file_path: typing.Union[str, Path], overwrite: bool = False) -> Path:

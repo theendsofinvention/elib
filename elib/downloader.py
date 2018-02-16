@@ -9,11 +9,9 @@ import certifi
 import requests
 import tqdm
 import urllib3  # type: ignore
-from elib.custom_logging._custom_logging import get_elib_logger
 
+from elib import LOGGER
 from .hash_ import get_hash
-
-LOGGER = get_elib_logger()
 
 REQUESTS_HEADERS = {'User-agent': 'Mozilla/5.0'}
 

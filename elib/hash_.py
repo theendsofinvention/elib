@@ -5,9 +5,7 @@ Computes hashes
 
 import hashlib
 
-from elib.custom_logging._custom_logging import get_elib_logger
-
-LOGGER = get_elib_logger()
+from elib import LOGGER
 
 
 def get_hash(data, method: str = 'md5'):

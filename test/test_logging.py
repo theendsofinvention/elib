@@ -10,6 +10,9 @@ from pathlib import Path
 import elib
 import pytest
 
+import elib.custom_logging._constants
+import elib.custom_logging._custom_logging_handler
+
 
 @pytest.fixture(scope='function')
 def setup_logging(caplog):
@@ -118,7 +121,7 @@ def test_custom_handler(setup_logging):
         nonlocal result
         result = True
 
-    handler = elib.custom_logging.CustomLoggingHandler('handler')
+    handler = elib.custom_logging._custom_logging_handler.CustomLoggingHandler('handler')
     handler.emit = _callback
 
     handler.register(logger)
@@ -139,7 +142,7 @@ def test_handler_level(level):
     for handler in logger.handlers:
         assert handler.level is level
 
-    handler = elib.custom_logging.CustomLoggingHandler('handler')
+    handler = elib.custom_logging._custom_logging_handler.CustomLoggingHandler('handler')
     handler.register(logger)
 
     elib.custom_logging.set_handler_level(logger.name, 'handler', level)
@@ -189,3 +192,13 @@ def test_no_log_file():
     logger = elib.custom_logging.get_logger(logger_name, log_to_file=False)
     assert not log_file.exists()
     assert len(logger.handlers) == 1
+
+
+def test_activate_elib_logging():
+    logger = logging.getLogger('some_logger')
+    handler = logging.StreamHandler()
+    logger.addHandler(handler)
+    elib.custom_logging._constants.ROOT_LOGGER = logger
+    elib.custom_logging.activate_elib_logging()
+    from elib import LOGGER as ELIB_LOGGER
+    assert handler in ELIB_LOGGER.handlers
