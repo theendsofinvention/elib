@@ -11,6 +11,7 @@ from pathlib import Path
 from elib import LOGGER as ELIB_LOGGER
 
 from . import _constants
+from .click_handler import ClickHandler
 
 # noinspection SpellCheckingInspection
 
@@ -69,6 +70,7 @@ def _setup_file_logging(logger: base.Logger,
 def get_logger(
         logger_name: str,
         log_to_file: bool = False,
+        use_click_handler: bool = False,
         rotate_logs: bool = False,
         rotate_log_when: str = 'midnight',
         rotate_log_backup_count: int = 7,
@@ -82,6 +84,7 @@ def get_logger(
 
     :param logger_name: name of the logger
     :param log_to_file: path to log file [optional]
+    :param use_click_handler: use click handler for console output
     :param rotate_logs: whether or not to rotate the log
     :param rotate_log_when: when log rotation should occur
     :param rotate_log_backup_count: number of log files to keep
@@ -106,7 +109,10 @@ def get_logger(
 
     logger.setLevel(base.DEBUG)
 
-    console_handler = base.StreamHandler(sys.stdout)
+    if use_click_handler:
+        console_handler = ClickHandler()
+    else:
+        console_handler = base.StreamHandler(sys.stdout)
     console_handler.setLevel(console_level)
     console_handler.setFormatter(base.Formatter(console_format))
 
