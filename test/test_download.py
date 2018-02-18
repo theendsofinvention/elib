@@ -2,8 +2,9 @@
 from pathlib import Path
 
 import requests
-from elib import downloader
 from mockito import mock, verify, when
+
+from elib import downloader
 
 URL = r'http://www.ovh.net/files/1Mio.dat'
 

@@ -7,9 +7,9 @@ import logging
 import logging.handlers
 from pathlib import Path
 
-import elib
 import pytest
 
+import elib
 import elib.custom_logging._constants
 import elib.custom_logging._custom_logging_handler
 

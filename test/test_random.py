@@ -3,9 +3,10 @@
 Tests random package
 """
 
-from elib.custom_random import random_bytes, random_string
 from hypothesis import given
 from hypothesis import strategies as st
+
+from elib.custom_random import random_bytes, random_string
 
 
 def test_random_str():
