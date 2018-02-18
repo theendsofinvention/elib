@@ -9,9 +9,9 @@ import sys
 from pathlib import Path
 
 from elib import LOGGER as ELIB_LOGGER
+
 from . import _constants
 from .click_handler import ClickHandler
-
 
 # noinspection SpellCheckingInspection
 
