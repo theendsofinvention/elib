@@ -2,9 +2,6 @@
 """
 Config property
 """
-# pylint: disable=too-few-public-methods
-
-import everett.manager
 
 from .config import BaseConfig
 
@@ -60,6 +57,7 @@ class ConfigProp:
             namespace=self.namespace
         )
 
+    # pylint: disable=attribute-defined-outside-init
     def __set_name__(self, owner, name):
         self.owner = owner
         self.name = name
