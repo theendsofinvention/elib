@@ -6,52 +6,27 @@ from pathlib import Path
 
 import everett
 import pytest
+
 from elib.config import BaseConfig
-# noinspection PyProtectedMember
-from elib.config.property import ConfigProp, _ConfigProp
+from elib.config.property import ConfigProp
 
 
 class WrongBaseClass:
     """
     Does not inherit BaseConfig
     """
-    @ConfigProp(str, '')
-    def string(self):
-        """Dummy prop"""
-        pass
+    string = ConfigProp(str, '')
 
 
 class DummyConfig(BaseConfig):
     """Dummy test class for Config"""
-    @ConfigProp(bool, False)
-    def debug(self):
-        """Dummy prop"""
-        pass
 
-    @ConfigProp(str, '')
-    def string(self):
-        """Dummy prop"""
-        pass
-
-    @ConfigProp(int, 0)
-    def integer(self):
-        """Dummy prop"""
-        pass
-
-    @ConfigProp(list, None)
-    def some_list(self):
-        """Dummy prop"""
-        pass
-
-    @ConfigProp(str, namespace='namespace')
-    def namespace_key(self):
-        """Dummy prop"""
-        pass
-
-    @ConfigProp(str)
-    def no_default(self):
-        """Dummy prop"""
-        pass
+    debug = ConfigProp(bool, 'false')
+    string = ConfigProp(str, '')
+    integer = ConfigProp(int, '0')
+    some_list = ConfigProp(list, '[]')
+    namespace_key = ConfigProp(str, namespace='namespace')
+    no_default = ConfigProp(str)
 
 
 def test_create_config():
@@ -135,14 +110,14 @@ def test_yaml_namespace(ext):
     with open(f'test.{ext}', 'w') as stream:
         stream.write('''
 debug: "true"
-string: some string
+string: "some string"
 integer: 1
 some_list:
   - caribou
   - gopher
   - moose
 namespace:
-  key: 'caribou'
+  namespace_key: 'caribou'
 ''')
     cfg = DummyConfig('test')
     assert cfg.namespace_key == 'caribou'
@@ -161,7 +136,7 @@ def test_wrong_base_class():
 
 
 def test_calling_from_instance():
-    assert isinstance(DummyConfig.integer, _ConfigProp)
+    assert isinstance(DummyConfig.integer, ConfigProp)
 
 
 def test_empty_config_file():
