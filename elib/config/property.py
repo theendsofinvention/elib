@@ -2,43 +2,40 @@
 """
 Config property
 """
-# pylint: disable=too-few-public-methods
-
-import everett.manager
 
 from .config import BaseConfig
 
 
-class _ConfigProp:
+class ConfigProp:
     """
-    Actual descriptor object created during ConfigProp.__call___ below.
-
-    Accessing a ConfigProp from the Config class itself (Config.PROPERTY as opposed to Config().property) gives access
-    to the object itself, with "default", "type", "__doc__", "key" and "func".
-
+    Decorator-class to create properties for META instances.
     """
 
-    def __init__(self, func: callable, default: object, parser: object, namespace):
+    def __init__(self, parser: object, default: object = 'NO_DEFAULT', namespace: str = None):
         """
-        Initialize the DESCRIPTOR.
+        Initialize properties of the descriptor.
 
-        :param func: callable to overwrite
-        :param default: default value if there's nothing in the EverettConfig yet
-        :param parser: type of object allowed to be SET
+        :param default: default value of the property if it isn't set yet
+        :param parser:
         """
-        self.func = func
-        self.prop_name = self.func.__name__.upper()
-        if namespace:
-            self.prop_name = self.prop_name.replace(
-                namespace.upper() + '_', '')
-        if not isinstance(default, str):
-            default = str(default)
         self.default = default
-        if parser is bool:
-            parser = everett.manager.parse_bool
         self.parser = parser
-        self.__doc__ = func.__doc__
         self.namespace = namespace
+
+    def _value(self, instance):
+        return getattr(instance, '_config')(
+            self.name,
+            default=self.default,
+            parser=self.parser,
+            namespace=self.namespace
+        )
+
+    def _default(self, instance):
+        return getattr(instance, '_config')(
+            self.name,
+            parser=self.parser,
+            namespace=self.namespace
+        )
 
     def __get__(self, instance, owner=None):
         """
@@ -59,45 +56,14 @@ class _ConfigProp:
             return self
 
         if not isinstance(instance, BaseConfig):
-            raise TypeError(
-                '_ConfigProp can only be used with EverettConfig() instances')
+            raise TypeError('_ConfigProp can only be used with EverettConfig() instances')
+
         if self.default == 'NO_DEFAULT':
-            return getattr(instance, '_config')(
-                self.prop_name,
-                parser=self.parser,
-                namespace=self.namespace
-            )
+            return self._default(instance)
 
-        return getattr(instance, '_config')(
-            self.prop_name,
-            default=self.default,
-            parser=self.parser,
-            namespace=self.namespace
-        )
+        return self._value(instance)
 
-
-class ConfigProp:
-    """
-    Decorator-class to create properties for META instances.
-    """
-
-    def __init__(self, parser: object, default: object = 'NO_DEFAULT', namespace: str = None):
-        """
-        Initialize properties of the descriptor.
-
-        :param default: default value of the property if it isn't set yet
-        :param parser:
-        """
-        self.default = default
-        self.type = parser
-        self.namespace = namespace
-
-    def __call__(self, func: callable) -> _ConfigProp:
-        """
-        Creates a DESCRIPTOR instance for a method of a META instance.
-
-        :param func: function to decorate
-        :return: decorated function as a descriptor instance of _MetaProperty
-        :rtype: _MetaProperty
-        """
-        return _ConfigProp(func, self.default, self.type, self.namespace)
+    # pylint: disable=attribute-defined-outside-init
+    def __set_name__(self, owner, name):
+        self.owner = owner
+        self.name = name
