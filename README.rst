@@ -5,6 +5,7 @@ Etcher's personal library for silly utility functions
 
 |OSI|
 
+|status|
 |license|
 |av|
 |codacy|
@@ -21,6 +22,9 @@ Etcher's personal library for silly utility functions
 .. |OSI| image:: https://badges.frapsoft.com/os/v3/open-source-200x33.png?v=103
     :target: https://github.com/ellerbrock/open-source-badges/
     :alt: '<3 Open Source'
+.. |status| image:: https://img.shields.io/pypi/status/elib.svg
+	:target: https://pypi.python.org/pypi/elib/
+	:alt: 'Cheese shop'
 .. |license| image:: https://img.shields.io/github/license/132nd-etcher/elib.svg
     :target: https://github.com/132nd-etcher/elib/blob/master/LICENSE
     :alt: 'License'
