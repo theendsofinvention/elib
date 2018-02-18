@@ -22,6 +22,21 @@ class ConfigProp:
         self.parser = parser
         self.namespace = namespace
 
+    def _value(self, instance):
+        return getattr(instance, '_config')(
+            self.name,
+            default=self.default,
+            parser=self.parser,
+            namespace=self.namespace
+        )
+
+    def _default(self, instance):
+        return getattr(instance, '_config')(
+            self.name,
+            parser=self.parser,
+            namespace=self.namespace
+        )
+
     def __get__(self, instance, owner=None):
         """
         Retrieves value.
@@ -41,21 +56,12 @@ class ConfigProp:
             return self
 
         if not isinstance(instance, BaseConfig):
-            raise TypeError(
-                '_ConfigProp can only be used with EverettConfig() instances')
-        if self.default == 'NO_DEFAULT':
-            return getattr(instance, '_config')(
-                self.name,
-                parser=self.parser,
-                namespace=self.namespace
-            )
+            raise TypeError('_ConfigProp can only be used with EverettConfig() instances')
 
-        return getattr(instance, '_config')(
-            self.name,
-            default=self.default,
-            parser=self.parser,
-            namespace=self.namespace
-        )
+        if self.default == 'NO_DEFAULT':
+            return self._default(instance)
+
+        return self._value(instance)
 
     # pylint: disable=attribute-defined-outside-init
     def __set_name__(self, owner, name):
