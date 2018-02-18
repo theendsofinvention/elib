@@ -13,3 +13,4 @@ htmlcov
 /.hypothesis/
 /.pytest_cache/
 *.log
+/doitall.cmd
