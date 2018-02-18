@@ -6,6 +6,7 @@ import logging
 from pkg_resources import DistributionNotFound, get_distribution
 
 LOGGER = logging.getLogger('ELIB')
+LOGGER.setLevel(logging.DEBUG)
 LOGGER.addHandler(logging.NullHandler())
 
 # pylint: disable=wrong-import-position

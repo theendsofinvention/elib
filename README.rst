@@ -21,7 +21,7 @@ Etcher's personal library for silly utility functions
 .. |OSI| image:: https://badges.frapsoft.com/os/v3/open-source-200x33.png?v=103
     :target: https://github.com/ellerbrock/open-source-badges/
     :alt: '<3 Open Source'
-    .. |license| image:: https://img.shields.io/github/license/132nd-etcher/elib.svg
+.. |license| image:: https://img.shields.io/github/license/132nd-etcher/elib.svg
     :target: https://github.com/132nd-etcher/elib/blob/master/LICENSE
     :alt: 'License'
 .. |av| image:: https://img.shields.io/appveyor/ci/132nd-etcher/elib/master.svg?label=master

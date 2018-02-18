@@ -202,3 +202,7 @@ def test_activate_elib_logging():
     elib.custom_logging.activate_elib_logging()
     from elib import LOGGER as ELIB_LOGGER
     assert handler in ELIB_LOGGER.handlers
+
+
+def test_get_elib_logger():
+    assert elib.custom_logging.get_elib_logger() is elib.LOGGER

@@ -131,3 +131,10 @@ def activate_elib_logging():
     """
     for handler in _constants.ROOT_LOGGER.handlers:
         ELIB_LOGGER.addHandler(handler)
+
+
+def get_elib_logger() -> base.Logger:
+    """
+    Returns ELIB's logger
+    """
+    return ELIB_LOGGER
