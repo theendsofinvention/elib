@@ -4,8 +4,9 @@ Tests paste package
 """
 
 import pytest
-from elib.paste import PasteContent, PasteError, create_new_paste
 from httmock import HTTMock, all_requests, response
+
+from elib.paste import PasteContent, PasteError, create_new_paste
 
 
 @all_requests

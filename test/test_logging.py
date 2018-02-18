@@ -7,15 +7,15 @@ import logging
 import logging.handlers
 from pathlib import Path
 
-import elib
 import pytest
 
+import elib
 import elib.custom_logging._constants
 import elib.custom_logging._custom_logging_handler
 
 
-@pytest.fixture(scope='function')
-def setup_logging(caplog):
+@pytest.fixture(scope='function', name='setup_logging')
+def _setup_logging(caplog):
     """Provides a logger and the caplog fixture"""
     logger = elib.custom_logging.get_logger(logger_name='TEST_LOGGER', console_level=logging.DEBUG)
     yield logger, caplog
@@ -206,3 +206,19 @@ def test_activate_elib_logging():
 
 def test_get_elib_logger():
     assert elib.custom_logging.get_elib_logger() is elib.LOGGER
+
+
+@pytest.mark.parametrize('level', ['debug', 'info', 'warning', 'error', 'critical'])
+def test_click_handler(level, capsys):
+    logger = elib.custom_logging.get_logger(
+        elib.custom_random.random_string(),
+        console_level=logging.DEBUG,
+        use_click_handler=True
+    )
+    func = getattr(logger, level)
+    func(level)
+    out, err = capsys.readouterr()
+    if level in ['debug', 'info', 'warning']:
+        assert level in out
+    else:
+        assert level in err

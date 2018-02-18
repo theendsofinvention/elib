@@ -6,6 +6,7 @@ from pathlib import Path
 
 import everett
 import pytest
+
 from elib.config import BaseConfig
 # noinspection PyProtectedMember
 from elib.config.property import ConfigProp, _ConfigProp
