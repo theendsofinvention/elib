@@ -11,7 +11,7 @@ class ConfigProp:
     Decorator-class to create properties for META instances.
     """
 
-    def __init__(self, parser: object, default: object = 'NO_DEFAULT', namespace: str = None):
+    def __init__(self, parser: object, default: object = '__NO_DEFAULT__', namespace: str = None):
         """
         Initialize properties of the descriptor.
 
@@ -58,7 +58,7 @@ class ConfigProp:
         if not isinstance(instance, BaseConfig):
             raise TypeError('_ConfigProp can only be used with EverettConfig() instances')
 
-        if self.default == 'NO_DEFAULT':
+        if self.default == '__NO_DEFAULT__':
             return self._default(instance)
 
         return self._value(instance)
