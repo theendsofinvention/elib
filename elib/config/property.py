@@ -30,7 +30,7 @@ class ConfigProp:
             namespace=self.namespace
         )
 
-    def _default(self, instance):
+    def _no_default(self, instance):
         return getattr(instance, '_config')(
             self.name,
             parser=self.parser,
@@ -59,7 +59,7 @@ class ConfigProp:
             raise TypeError('_ConfigProp can only be used with EverettConfig() instances')
 
         if self.default == '__NO_DEFAULT__':
-            return self._default(instance)
+            return self._no_default(instance)
 
         return self._value(instance)
 
