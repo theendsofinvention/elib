@@ -6,14 +6,19 @@ Convenience functions to manage logging
 import logging as base
 import logging.handlers as base_handlers
 import sys
+import typing
 from pathlib import Path
 
 from elib import LOGGER as ELIB_LOGGER
-
 from . import _constants
 from .click_handler import ClickHandler
 
-# noinspection SpellCheckingInspection
+
+def _str_to_level(level):
+    if isinstance(level, str):
+        return _constants.LEVELS[level.upper()]
+
+    return level
 
 
 def set_handler_level(logger_name, handler_name, level):
@@ -22,11 +27,10 @@ def set_handler_level(logger_name, handler_name, level):
 
     Args:
         logger_name: name of the logger to update
+        handler_name: name of the handler (available by default: "ch", "fh"
         level: desired level
     """
-    if isinstance(level, str):
-        level = _constants.LEVELS[level.upper()]
-    _constants.LOGGERS[logger_name][handler_name].setLevel(level)
+    _constants.LOGGERS[logger_name][handler_name].setLevel(_str_to_level(level))
 
 
 # pylint: disable=too-many-arguments
@@ -54,7 +58,7 @@ def _setup_file_logging(logger: base.Logger,
             encoding='utf8'
         )
 
-    file_handler.setLevel(file_level)
+    file_handler.setLevel(_str_to_level(file_level))
     file_handler.setFormatter(base.Formatter(file_format))
 
     logger.addHandler(file_handler)
@@ -101,11 +105,12 @@ def get_logger(
 
     kwargs = locals()
 
-    if _constants.ROOT_LOGGER is None:
-        logger = base.getLogger(logger_name)
-        _constants.ROOT_LOGGER = logger
-    else:
-        logger = _constants.ROOT_LOGGER.getChild(logger_name)
+    logger = base.getLogger(logger_name)
+    # if _constants.ROOT_LOGGER is None:
+    #
+    #     _constants.ROOT_LOGGER = logger
+    # else:
+    #     logger = _constants.ROOT_LOGGER.getChild(logger_name)
 
     logger.setLevel(base.DEBUG)
 
@@ -113,7 +118,7 @@ def get_logger(
         console_handler = ClickHandler()
     else:
         console_handler = base.StreamHandler(sys.stdout)
-    console_handler.setLevel(console_level)
+    console_handler.setLevel(_str_to_level(console_level))
     console_handler.setFormatter(base.Formatter(console_format))
 
     logger.addHandler(console_handler)
@@ -139,8 +144,46 @@ def activate_elib_logging():
         ELIB_LOGGER.addHandler(handler)
 
 
-def get_elib_logger() -> base.Logger:
+def get_elib_logger() -> object:
     """
     Returns ELIB's logger
     """
     return ELIB_LOGGER
+
+
+def _remove_all_handlers_from_logger(logger: base.Logger):
+    for handler in logger.handlers:
+        logger.removeHandler(handler)
+
+
+def set_root_logger(logger_name: typing.Union[base.Logger, str]):
+    """
+    Sets the root logger
+
+    This will attache the root logger handlers to all other loggers available
+
+
+    Args:
+        logger_name: name of the root logger
+    """
+    if isinstance(logger_name, base.Logger):
+        logger_name = logger_name.name
+
+    _constants.ROOT_LOGGER = _constants.LOGGERS[logger_name]['logger']
+    for this_logger_name in _constants.LOGGERS:
+        if this_logger_name == logger_name:
+            continue
+
+        logger = _constants.LOGGERS[this_logger_name]['logger']
+        _remove_all_handlers_from_logger(logger)
+        for handler in _constants.ROOT_LOGGER.handlers:
+            logger.addHandler(handler)
+
+
+def get_root_logger():
+    """
+    Returns: current root logger
+    """
+    if _constants.ROOT_LOGGER is None:
+        raise ValueError('no root logger set')
+    return _constants.ROOT_LOGGER

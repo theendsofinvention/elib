@@ -5,6 +5,7 @@ Tests logging package
 
 import logging
 import logging.handlers
+import re
 from pathlib import Path
 
 import pytest
@@ -12,6 +13,13 @@ import pytest
 import elib
 import elib.custom_logging._constants
 import elib.custom_logging._custom_logging_handler
+
+
+@pytest.fixture(name='cleanup')
+def _cleanup():
+    elib.custom_logging._constants.LOGGERS = {}
+    elib.custom_logging._constants.ROOT_LOGGER = None
+    yield True
 
 
 @pytest.fixture(scope='function', name='setup_logging')
@@ -222,3 +230,55 @@ def test_click_handler(level, capsys):
         assert level in out
     else:
         assert level in err
+
+
+def test_set_root_logger(cleanup, capsys):
+    assert cleanup
+    logger1 = elib.custom_logging.get_logger('logger1')
+    logger2 = elib.custom_logging.get_logger('logger2')
+    logger3 = elib.custom_logging.get_logger('logger3', log_to_file=True, use_click_handler=True)
+    assert elib.custom_logging._constants.ROOT_LOGGER is None
+    elib.custom_logging.set_root_logger('logger3')
+    assert elib.custom_logging._constants.ROOT_LOGGER is logger3
+    for handler in logger3.handlers:
+        assert handler in logger1.handlers
+        assert handler in logger2.handlers
+    logger1.debug('test')
+    out, err = capsys.readouterr()
+    assert 'test' not in out
+    logger2.error('error')
+    out, err = capsys.readouterr()
+    assert 'error' in err
+    logger3.info('info')
+    out, err = capsys.readouterr()
+    assert 'info' not in out
+    elib.custom_logging.set_handler_level('logger3', 'ch', 'debug')
+    logger1.debug('test')
+    out, err = capsys.readouterr()
+    assert 'test' in out
+    logger2.error('error')
+    out, err = capsys.readouterr()
+    assert 'error' in err
+    logger3.info('info')
+    out, err = capsys.readouterr()
+    assert 'info' in out
+    log_file = Path('logger3.log')
+    assert log_file.exists()
+    text = log_file.read_text()
+    for regex in [
+        r'.*DEBUG logger1.*test.*',
+        r'.*ERROR logger2.*error.*',
+        r'.*INFO logger3.*info.*',
+    ]:
+        assert re.search(regex, text), f'REGEX: {regex}, TEXT: {text}'
+
+
+def test_change_root_logger():
+    logger1 = elib.custom_logging.get_logger('logger1', use_click_handler=True)
+    logger2 = elib.custom_logging.get_logger('logger2', log_to_file=True)
+    elib.custom_logging.set_root_logger(logger1)
+    assert elib.custom_logging.get_root_logger() == logger1
+    for handler in logger1.handlers:
+        assert handler in logger2.handlers
+    elib.custom_logging.set_root_logger(logger2)
+    assert elib.custom_logging.get_root_logger() == logger2
