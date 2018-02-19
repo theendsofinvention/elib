@@ -26,10 +26,8 @@ class ConfigProp:
     def _name_without_namespace(self):
         if self.namespace is None:
             return self.name
-        if self.name.upper().startswith(f'{self.namespace.upper()}_'):
-            return self.name.upper().replace(f'{self.namespace.upper()}_', '')
 
-        return self.name
+        return self.name.upper().replace(f'{self.namespace.upper()}_', '')
 
     def _value(self, instance):
         return getattr(instance, '_config')(

@@ -15,6 +15,7 @@ class DummyConfig(BaseConfig):
     namespace_key = ConfigProp(str, namespace='namespace')
     no_default = ConfigProp(str)
 
+
 @pytest.fixture()
 def dummy_config():
     def make_dummy_config(*args, **kwargs):
