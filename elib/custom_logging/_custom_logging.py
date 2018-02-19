@@ -3,14 +3,13 @@
 Convenience functions to manage logging
 """
 
-import typing
 import logging as base
 import logging.handlers as base_handlers
 import sys
+import typing
 from pathlib import Path
 
 from elib import LOGGER as ELIB_LOGGER
-
 from . import _constants
 from .click_handler import ClickHandler
 
@@ -169,7 +168,7 @@ def set_root_logger(logger_name: typing.Union[base.Logger, str]):
     """
     if isinstance(logger_name, base.Logger):
         logger_name = logger_name.name
-    
+
     _constants.ROOT_LOGGER = _constants.LOGGERS[logger_name]['logger']
     for this_logger_name in _constants.LOGGERS:
         if this_logger_name == logger_name:
