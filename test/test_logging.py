@@ -4,8 +4,8 @@ Tests logging package
 """
 
 import logging
-import re
 import logging.handlers
+import re
 from pathlib import Path
 
 import pytest
@@ -271,3 +271,9 @@ def test_set_root_logger(cleanup, capsys):
         r'.*INFO logger3.*info.*',
     ]:
         assert re.search(regex, text), f'REGEX: {regex}, TEXT: {text}'
+
+
+def test_change_root_logger():
+    logger1 = elib.custom_logging.get_logger('logger1', use_click_handler=True)
+    logger2 = elib.custom_logging.get_logger('logger2', log_to_file=True)
+
