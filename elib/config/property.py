@@ -28,8 +28,8 @@ class ConfigProp:
             return self.name
         if self.name.upper().startswith(f'{self.namespace.upper()}_'):
             return self.name.upper().replace(f'{self.namespace.upper()}_', '')
-        else:
-            return self.name
+
+        return self.name
 
     def _value(self, instance):
         return getattr(instance, '_config')(
