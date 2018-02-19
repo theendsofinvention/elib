@@ -4,6 +4,7 @@ Tests logging package
 """
 
 import logging
+import re
 import logging.handlers
 from pathlib import Path
 
@@ -261,3 +262,12 @@ def test_set_root_logger(cleanup, capsys):
     logger3.info('info')
     out, err = capsys.readouterr()
     assert 'info' in out
+    log_file = Path('logger3.log')
+    assert log_file.exists()
+    text = log_file.read_text()
+    for regex in [
+        r'.*DEBUG logger1.*test.*',
+        r'.*ERROR logger2.*error.*',
+        r'.*INFO logger3.*info.*',
+    ]:
+        assert re.search(regex, text), f'REGEX: {regex}, TEXT: {text}'

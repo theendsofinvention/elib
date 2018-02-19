@@ -29,6 +29,7 @@ def set_handler_level(logger_name, handler_name, level):
 
     Args:
         logger_name: name of the logger to update
+        handler_name: name of the handler (available by default: "ch", "fh"
         level: desired level
     """
     _constants.LOGGERS[logger_name][handler_name].setLevel(_str_to_level(level))
@@ -158,6 +159,15 @@ def _remove_all_handlers_from_logger(logger: base.Logger):
 
 
 def set_root_logger(logger_name: str):
+    """
+    Sets the root logger
+
+    This will attache the root logger handlers to all other loggers available
+
+
+    Args:
+        logger_name: name of the root logger
+    """
     _constants.ROOT_LOGGER = _constants.LOGGERS[logger_name]['logger']
     for this_logger_name in _constants.LOGGERS:
         if this_logger_name == logger_name:
@@ -170,6 +180,9 @@ def set_root_logger(logger_name: str):
 
 
 def get_root_logger():
+    """
+    Returns: current root logger
+    """
     if _constants.ROOT_LOGGER is None:
         raise ValueError('no root logger set')
     return _constants.ROOT_LOGGER
