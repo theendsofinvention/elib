@@ -4,7 +4,7 @@ from pathlib import Path
 import everett
 import pytest
 
-from elib.config import BaseConfig, ConfigProp
+from elib.config import ConfigProp
 
 
 class WrongBaseClass:

@@ -21,6 +21,6 @@ def dummy_config():
     def make_dummy_config(*args, **kwargs):
         if args or kwargs:
             return DummyConfig(*args, **kwargs)
-        else:
-            return DummyConfig
+
+        return DummyConfig
     yield make_dummy_config
