@@ -276,4 +276,9 @@ def test_set_root_logger(cleanup, capsys):
 def test_change_root_logger():
     logger1 = elib.custom_logging.get_logger('logger1', use_click_handler=True)
     logger2 = elib.custom_logging.get_logger('logger2', log_to_file=True)
-
+    elib.custom_logging.set_root_logger(logger1)
+    assert elib.custom_logging.get_root_logger() == logger1
+    for handler in logger1.handlers:
+        assert handler in logger2.handlers
+    elib.custom_logging.set_root_logger(logger2)
+    assert elib.custom_logging.get_root_logger() == logger2

@@ -3,6 +3,7 @@
 Convenience functions to manage logging
 """
 
+import typing
 import logging as base
 import logging.handlers as base_handlers
 import sys
@@ -158,7 +159,7 @@ def _remove_all_handlers_from_logger(logger: base.Logger):
         logger.removeHandler(handler)
 
 
-def set_root_logger(logger_name: str):
+def set_root_logger(logger_name: typing.Union[base.Logger, str]):
     """
     Sets the root logger
 
@@ -168,6 +169,9 @@ def set_root_logger(logger_name: str):
     Args:
         logger_name: name of the root logger
     """
+    if isinstance(logger_name, base.Logger):
+        logger_name = logger_name.name
+    
     _constants.ROOT_LOGGER = _constants.LOGGERS[logger_name]['logger']
     for this_logger_name in _constants.LOGGERS:
         if this_logger_name == logger_name:
