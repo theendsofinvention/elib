@@ -22,9 +22,18 @@ class ConfigProp:
         self.parser = parser
         self.namespace = namespace
 
+    @property
+    def _name_without_namespace(self):
+        if self.namespace is None:
+            return self.name
+        if self.name.upper().startswith(f'{self.namespace.upper()}_'):
+            return self.name.upper().replace(f'{self.namespace.upper()}_', '')
+        else:
+            return self.name
+
     def _value(self, instance):
         return getattr(instance, '_config')(
-            self.name,
+            self._name_without_namespace,
             default=self.default,
             parser=self.parser,
             namespace=self.namespace
@@ -32,7 +41,7 @@ class ConfigProp:
 
     def _no_default(self, instance):
         return getattr(instance, '_config')(
-            self.name,
+            self._name_without_namespace,
             parser=self.parser,
             namespace=self.namespace
         )
