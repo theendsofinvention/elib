@@ -157,7 +157,7 @@ def _remove_all_handlers_from_logger(logger: base.Logger):
         logger.removeHandler(handler)
 
 
-def set_root_logger(logger_name: typing.Union[base.Logger, str], activate_elib_logging: bool = True):
+def set_root_logger(logger_name: typing.Union[base.Logger, str]):
     """
     Sets the root logger
 
@@ -180,8 +180,7 @@ def set_root_logger(logger_name: typing.Union[base.Logger, str], activate_elib_l
         for handler in _constants.ROOT_LOGGER.handlers:
             logger.addHandler(handler)
 
-    if activate_elib_logging:  # pragma: no cover
-        _activate_elib_logging()
+    _activate_elib_logging()
 
 
 def get_root_logger():
