@@ -136,7 +136,7 @@ def get_logger(
     return logger
 
 
-def activate_elib_logging():
+def _activate_elib_logging():
     """
     Attaches all handlers of the root logger to the ELIB logger
     """
@@ -156,7 +156,7 @@ def _remove_all_handlers_from_logger(logger: base.Logger):
         logger.removeHandler(handler)
 
 
-def set_root_logger(logger_name: typing.Union[base.Logger, str]):
+def set_root_logger(logger_name: typing.Union[base.Logger, str], activate_elib_logging: bool = True):
     """
     Sets the root logger
 
@@ -178,6 +178,9 @@ def set_root_logger(logger_name: typing.Union[base.Logger, str]):
         _remove_all_handlers_from_logger(logger)
         for handler in _constants.ROOT_LOGGER.handlers:
             logger.addHandler(handler)
+
+    if activate_elib_logging:
+        _activate_elib_logging()
 
 
 def get_root_logger():

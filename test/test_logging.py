@@ -202,16 +202,6 @@ def test_no_log_file():
     assert len(logger.handlers) == 1
 
 
-def test_activate_elib_logging():
-    logger = logging.getLogger('some_logger')
-    handler = logging.StreamHandler()
-    logger.addHandler(handler)
-    elib.custom_logging._constants.ROOT_LOGGER = logger
-    elib.custom_logging.activate_elib_logging()
-    from elib import LOGGER as ELIB_LOGGER
-    assert handler in ELIB_LOGGER.handlers
-
-
 def test_get_elib_logger():
     assert elib.custom_logging.get_elib_logger() is elib.LOGGER
 
