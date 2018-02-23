@@ -10,6 +10,7 @@ import typing
 from pathlib import Path
 
 from elib import LOGGER as ELIB_LOGGER
+
 from . import _constants
 from .click_handler import ClickHandler
 
@@ -179,7 +180,7 @@ def set_root_logger(logger_name: typing.Union[base.Logger, str], activate_elib_l
         for handler in _constants.ROOT_LOGGER.handlers:
             logger.addHandler(handler)
 
-    if activate_elib_logging:
+    if activate_elib_logging:  # pragma: no cover
         _activate_elib_logging()
 
 
@@ -187,6 +188,6 @@ def get_root_logger():
     """
     Returns: current root logger
     """
-    if _constants.ROOT_LOGGER is None:
+    if _constants.ROOT_LOGGER is None:  # pragma: no cover
         raise ValueError('no root logger set')
     return _constants.ROOT_LOGGER
