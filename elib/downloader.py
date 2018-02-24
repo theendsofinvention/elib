@@ -11,6 +11,7 @@ import tqdm
 import urllib3  # type: ignore
 
 import elib.custom_logging
+
 from .hash_ import get_hash
 
 LOGGER = elib.custom_logging.get_logger('ELIB')

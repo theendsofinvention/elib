@@ -3,8 +3,8 @@
 Convenience functions to manage logging
 """
 
-import logging as base
 import importlib
+import logging as base
 import logging.handlers as base_handlers
 import sys
 import typing
@@ -103,8 +103,6 @@ def get_logger(
         _constants.LOGGERS[logger_name]['logger'].debug(f'logger already initialized: {logger_name}')
         return _constants.LOGGERS[logger_name]['logger']
 
-    kwargs = locals()
-
     logger = base.getLogger(logger_name)
     # if _constants.ROOT_LOGGER is None:
     #
@@ -179,11 +177,11 @@ def set_root_logger(logger_name: typing.Union[base.Logger, str]):
         for handler in _constants.ROOT_LOGGER.handlers:
             this_logger.addHandler(handler)
 
-    for logger_name in _constants.LOGGERS.keys():
+    for logger_name_ in _constants.LOGGERS:
         try:
-            module = importlib.import_module(logger_name)
+            module = importlib.import_module(logger_name_)
             version = getattr(module, '__version__', 'no __version__ found')
-            _constants.ROOT_LOGGER.debug(f'{logger_name}: {version}')
+            _constants.ROOT_LOGGER.debug(f'{logger_name_}: {version}')
         except ModuleNotFoundError:
             pass
 
