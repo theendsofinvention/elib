@@ -17,6 +17,7 @@ configobj = "*"
 everett = "*"
 pyyaml = "*"
 gtts = "*"
+pefile = "*"
 
 
 [dev-packages]
