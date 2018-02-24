@@ -34,5 +34,5 @@ def get_resource_path(package_name: str, relative_path: typing.Union[str, Path])
         path = method(package_name, relative_path)
         if path.exists():
             return path
-    else:
-        raise FileNotFoundError(relative_path)
+
+    raise FileNotFoundError(relative_path)
