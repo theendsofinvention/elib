@@ -22,7 +22,7 @@ def test_pretty():
         'k': 't',
         'l': 't',
     }
-    out = elib.pretty_format(obj)
+    out = elib.pretty.pretty_format(obj)
     print(out)
     assert out == """    {'a': 't',
      'b': 't',
@@ -44,5 +44,5 @@ def test_pretty_no_indent():
     obj = {
         'test': 'value'
     }
-    out = elib.pretty_format(obj, indent=0)
+    out = elib.pretty.pretty_format(obj, indent=0)
     assert out == "{'test': 'value'}"

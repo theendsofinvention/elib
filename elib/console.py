@@ -7,7 +7,6 @@ import ctypes
 
 import click
 
-from elib import LOGGER
 from elib.settings import ELIBSettings
 
 
@@ -18,7 +17,6 @@ def set_title(title: str):  # pragma: no cover
     Args:
         title: title as a string
     """
-    LOGGER.debug(f'setting console title to {title}')
     ctypes.windll.kernel32.SetConsoleTitleW(title)
 
 
