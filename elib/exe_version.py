@@ -8,15 +8,15 @@ from pathlib import Path
 import pefile
 
 
-def _low_word(dword):
+def _low_word(dword):  # pragma: no cover
     return dword & 0x0000ffff
 
 
-def _high_word(dword):
+def _high_word(dword):  # pragma: no cover
     return dword >> 16
 
 
-class VersionInfo:
+class VersionInfo:  # pragma: no cover
     """
     Simple version info
     """
@@ -46,7 +46,7 @@ class VersionInfo:
         return self.file_version
 
 
-def get_product_version(path: typing.Union[str, Path]) -> VersionInfo:
+def get_product_version(path: typing.Union[str, Path]) -> VersionInfo:  # pragma: no cover
     """
     Get version info from executable
 
@@ -67,12 +67,3 @@ def get_product_version(path: typing.Union[str, Path]) -> VersionInfo:
                     return VersionInfo(file_version, full_version)
 
     raise RuntimeError(f'unable to obtain version from {path}')
-
-
-if __name__ == '__main__':
-    from epab import __version__
-    import epab.utils
-    print(epab.utils.get_git_version_info())
-    print(__version__)
-    print(get_product_version(r'F:\DEV\EPAB\dist\epab.exe'))
-    print(get_product_version(r'F:\DEV\EPAB\dist\epab.exe').full_version)
