@@ -10,9 +10,10 @@ import requests
 import tqdm
 import urllib3  # type: ignore
 
-from elib import LOGGER
-
+import elib.custom_logging
 from .hash_ import get_hash
+
+LOGGER = elib.custom_logging.get_logger('ELIB')
 
 REQUESTS_HEADERS = {'User-agent': 'Mozilla/5.0'}
 

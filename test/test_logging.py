@@ -203,7 +203,7 @@ def test_no_log_file():
 
 
 def test_get_elib_logger():
-    assert elib.custom_logging.get_elib_logger() is elib.LOGGER
+    assert elib.custom_logging.get_elib_logger() is elib.custom_logging.get_logger('ELIB')
 
 
 @pytest.mark.parametrize('level', ['debug', 'info', 'warning', 'error', 'critical'])
@@ -225,7 +225,7 @@ def test_click_handler(level, capsys):
 def test_set_root_logger(cleanup, capsys):
     assert cleanup
     logger1 = elib.custom_logging.get_logger('logger1')
-    logger2 = elib.custom_logging.get_logger('logger2')
+    logger2 = elib.custom_logging.get_logger('epab')
     logger3 = elib.custom_logging.get_logger('logger3', log_to_file=True, use_click_handler=True)
     assert elib.custom_logging._constants.ROOT_LOGGER is None
     elib.custom_logging.set_root_logger('logger3')
@@ -251,13 +251,14 @@ def test_set_root_logger(cleanup, capsys):
     assert 'error' in err
     logger3.info('info')
     out, err = capsys.readouterr()
-    assert 'info' in out
+    print(out)
+    assert 'info' in out, capsys.readouterr()
     log_file = Path('logger3.log')
     assert log_file.exists()
     text = log_file.read_text()
     for regex in [
         r'.*DEBUG logger1.*test.*',
-        r'.*ERROR logger2.*error.*',
+        r'.*ERROR epab.*error.*',
         r'.*INFO logger3.*info.*',
     ]:
         assert re.search(regex, text), f'REGEX: {regex}, TEXT: {text}'

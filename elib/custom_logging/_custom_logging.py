@@ -4,12 +4,11 @@ Convenience functions to manage logging
 """
 
 import logging as base
+import importlib
 import logging.handlers as base_handlers
 import sys
 import typing
 from pathlib import Path
-
-from elib import LOGGER as ELIB_LOGGER
 
 from . import _constants
 from .click_handler import ClickHandler
@@ -131,18 +130,18 @@ def get_logger(
     }
 
     if log_to_file:
-        file_handler = _setup_file_logging(logger, **kwargs)
+        file_handler = _setup_file_logging(
+            logger,
+            logger_name,
+            rotate_logs,
+            rotate_log_when,
+            rotate_log_backup_count,
+            file_level,
+            file_format
+        )
         _constants.LOGGERS[logger.name]['fh'] = file_handler
 
     return logger
-
-
-def _activate_elib_logging():
-    """
-    Attaches all handlers of the root logger to the ELIB logger
-    """
-    for handler in _constants.ROOT_LOGGER.handlers:
-        ELIB_LOGGER.addHandler(handler)
 
 
 def get_elib_logger() -> object:
@@ -175,12 +174,18 @@ def set_root_logger(logger_name: typing.Union[base.Logger, str]):
         if this_logger_name == logger_name:
             continue
 
-        logger = _constants.LOGGERS[this_logger_name]['logger']
-        _remove_all_handlers_from_logger(logger)
+        this_logger = _constants.LOGGERS[this_logger_name]['logger']
+        _remove_all_handlers_from_logger(this_logger)
         for handler in _constants.ROOT_LOGGER.handlers:
-            logger.addHandler(handler)
+            this_logger.addHandler(handler)
 
-    _activate_elib_logging()
+    for logger_name in _constants.LOGGERS.keys():
+        try:
+            module = importlib.import_module(logger_name)
+            version = getattr(module, '__version__', 'no __version__ found')
+            _constants.ROOT_LOGGER.debug(f'{logger_name}: {version}')
+        except ModuleNotFoundError:
+            pass
 
 
 def get_root_logger():
@@ -190,3 +195,6 @@ def get_root_logger():
     if _constants.ROOT_LOGGER is None:  # pragma: no cover
         raise ValueError('no root logger set')
     return _constants.ROOT_LOGGER
+
+
+ELIB_LOGGER = get_logger('ELIB')

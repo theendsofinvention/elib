@@ -6,8 +6,6 @@ Path utilities
 import typing
 from pathlib import Path
 
-from elib import LOGGER
-
 
 def ensure_path(*path: typing.Union[str, Path], must_exist: bool = True) -> Path:
     """
@@ -62,6 +60,5 @@ def ensure_dir(*dir_path: typing.Union[str, Path], must_exist: bool = True, crea
             raise TypeError(f'not a directory: {str(dir_path.absolute())}')
     else:
         if create:
-            LOGGER.debug(f'creating directory: {dir_path}')
             dir_path.mkdir(parents=True)
     return dir_path

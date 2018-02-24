@@ -7,7 +7,6 @@ import ctypes
 
 import click
 
-from elib import LOGGER
 from elib.settings import ELIBSettings
 
 
