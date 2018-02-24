@@ -2,7 +2,6 @@
 import sys
 from pathlib import Path
 
-import pkg_resources
 import pytest
 from mockito import verifyStubbedInvocationsAreUsed, when
 
