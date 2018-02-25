@@ -7,7 +7,6 @@ import pytest
 import requests
 from mockito import mock, verifyStubbedInvocationsAreUsed, when
 
-import elib
 from elib.updater import _github as github
 
 
