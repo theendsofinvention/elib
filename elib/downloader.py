@@ -4,6 +4,8 @@ Download content from the Web
 """
 import os
 import time
+import typing
+from pathlib import Path
 
 import certifi
 import requests
@@ -268,10 +270,9 @@ class Downloader:  # pylint: disable=too-many-instance-attributes,too-many-argum
             return False
 
 
-# TODO: move to elib
 def download(
         url: str,
-        outfile: str,
+        outfile: typing.Union[Path, str],
         hexdigest=None,
 ) -> bool:
     """
@@ -285,6 +286,7 @@ def download(
     Returns: success of the operation
 
     """
+    outfile = Path(outfile).absolute()
     LOGGER.info(f'downloading: {locals()}')
     req = requests.head(url, headers=REQUESTS_HEADERS, timeout=5)
     if not req.ok:
