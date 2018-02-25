@@ -8,6 +8,7 @@ DEFAULT_CONSOLE_FORMAT = '%(relativeCreated)08d ms ' \
                          '%(levelname)8s ' \
                          '%(name)s ' \
                          '%(message)s'
+# noinspection SpellCheckingInspection
 DEFAULT_FILE_FORMAT = '%(asctime)s %(levelname)8s %(name)s ' \
                       '%(process)d %(processName)s ' \
                       '%(thread)d %(threadName)s ' \
@@ -15,6 +16,7 @@ DEFAULT_FILE_FORMAT = '%(asctime)s %(levelname)8s %(name)s ' \
                       '%(message)s'
 LOGGERS = {}
 ROOT_LOGGER = None
+# noinspection SpellCheckingInspection
 LEVELS = {
     'DEBUG': base.DEBUG,
     'INFO': base.INFO,
