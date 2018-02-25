@@ -14,23 +14,29 @@ from . import _constants
 from .click_handler import ClickHandler
 
 
-def _str_to_level(level):
+def _str_to_level(level: typing.Union[str, int]):
     if isinstance(level, str):
         return _constants.LEVELS[level.upper()]
 
     return level
 
 
-def set_handler_level(logger_name, handler_name, level):
+def set_handler_level(
+        logger: typing.Union[base.Logger, str],
+        handler_name: str,
+        level: typing.Union[str, int]
+):
     """
     Sets output level for console handlers
 
     Args:
-        logger_name: name of the logger to update
+        logger: name of the logger to update
         handler_name: name of the handler (available by default: "ch", "fh"
         level: desired level
     """
-    _constants.LOGGERS[logger_name][handler_name].setLevel(_str_to_level(level))
+    if isinstance(logger, base.Logger):
+        logger = logger.name
+    _constants.LOGGERS[logger][handler_name].setLevel(_str_to_level(level))
 
 
 # pylint: disable=too-many-arguments
