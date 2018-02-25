@@ -5,7 +5,7 @@ Install a handler to redirect all INFO messages (and higher) to the Discord Chan
 import abc
 import logging as base
 
-from elib.custom_logging._constants import LOGGERS
+from ._constants import LOGGERS
 
 
 class CustomLoggingHandler(base.Handler):
