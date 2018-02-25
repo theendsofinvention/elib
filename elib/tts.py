@@ -31,7 +31,7 @@ def text_to_speech(text: str, file_path: typing.Union[str, Path], overwrite: boo
         LOGGER.error(f'"{file_path}" already exists')
         raise FileExistsError(file_path)
     LOGGER.debug('encoding text')
-    tts = gtts.gTTS(text=text, lang='en', slow=False)
+    tts = gtts.gTTS(text=text, slow=False)
     LOGGER.debug('saving MP3 file')
     tts.save(str(file_path))
     return file_path
