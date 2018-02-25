@@ -73,7 +73,7 @@ class Downloader:  # pylint: disable=too-many-instance-attributes,too-many-argum
 
         file_hash = get_hash(self.file_binary_data, self.hash_method)
 
-        if file_hash == self.hexdigest:
+        if file_hash.upper() == self.hexdigest.upper():
             LOGGER.debug('file hash verified')
             return True
 
