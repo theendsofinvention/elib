@@ -6,7 +6,8 @@ from pathlib import Path
 import pytest
 from mockito import verifyStubbedInvocationsAreUsed, when
 
-from elib.updater import _github as github, _updater as updater
+from elib.updater import _github as github
+from elib.updater import _updater as updater
 
 
 @pytest.fixture(name='release')
