@@ -18,7 +18,6 @@ def test_merge_dry_run(repo):
     repo.create_branch_and_checkout('develop')
     Path('test').touch()
     repo.commit('test')
-    sha = repo.get_sha()
     repo.checkout('master')
 
 

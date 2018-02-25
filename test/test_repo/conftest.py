@@ -30,8 +30,8 @@ def repo(dummy_git_repo):
 @pytest.fixture(params=[[mimesis.File().file_name() for _ in range(5)] for _ in range(1)])
 def file_set(request):
     file_set_ = list(map(Path, request.param))
-    for file in file_set_:
-        file.touch()
+    for file_ in file_set_:
+        file_.touch()
     yield file_set_
 
 

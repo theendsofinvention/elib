@@ -41,8 +41,8 @@ def test_commit_appveyor(repo):
 
 def test_commit_subset(repo, file_set):
     assert not repo.changed_files()
-    for file in file_set:
-        assert str(file) in repo.untracked_files()
+    for file_ in file_set:
+        assert str(file_) in repo.untracked_files()
 
     first_file = str(file_set[0])
     rest = file_set[1:]

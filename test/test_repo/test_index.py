@@ -2,23 +2,23 @@
 
 
 def test_stage_all(repo, file_set):
-    for file in file_set:
-        assert file.name in repo.untracked_files()
+    for file_ in file_set:
+        assert file_.name in repo.untracked_files()
     repo.stage_all()
     assert not repo.untracked_files()
-    for file in file_set:
-        assert file.name in repo.list_staged_files()
+    for file_ in file_set:
+        assert file_.name in repo.list_staged_files()
 
 
 def test_stage_subset(repo, file_set):
-    for file in file_set:
-        assert file.name in repo.untracked_files()
+    for file_ in file_set:
+        assert file_.name in repo.untracked_files()
     repo.stage_subset(file_set[:3])
     assert repo.untracked_files()
-    for file in file_set[:3]:
-        assert file.name in repo.list_staged_files()
-    for file in file_set[3:]:
-        assert file.name not in repo.list_staged_files()
+    for file_ in file_set[:3]:
+        assert file_.name in repo.list_staged_files()
+    for file_ in file_set[3:]:
+        assert file_.name not in repo.list_staged_files()
 
 
 def test_stage_updated(repo, file_set):
