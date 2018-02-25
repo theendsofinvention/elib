@@ -7,6 +7,7 @@ import sys
 
 import pytest
 from mockito import unstub
+import elib
 
 
 # noinspection PyUnusedLocal
@@ -39,6 +40,14 @@ def _unstub():
     unstub()
     yield
     unstub()
+
+
+@pytest.fixture(autouse=True)
+def _setup_logging():
+    logger = elib.custom_logging.get_logger('ELIB', console_level='debug')
+    elib.custom_logging.set_handler_level(logger, 'ch', 'debug')
+    elib.custom_logging.set_root_logger(logger)
+    yield
 
 
 def pytest_addoption(parser):
