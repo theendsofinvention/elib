@@ -18,6 +18,7 @@ everett = "*"
 pyyaml = "*"
 gtts = "*"
 pefile = "*"
+humanize = "*"
 
 
 [dev-packages]
