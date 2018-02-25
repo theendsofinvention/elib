@@ -2,7 +2,7 @@
 from pathlib import Path
 
 import requests
-from mockito import mock, verify, when
+from mockito import mock, when, verifyStubbedInvocationsAreUsed
 
 from elib import downloader
 
@@ -27,14 +27,14 @@ def test_download_no_digest():
 def test_download_no_data():
     when(downloader.Downloader).download_to_memory(...)
     assert not downloader.download(url=URL, outfile='./test', hexdigest='6cb91af4ed4c60c11613b75cd1fc6116')
-    verify(downloader.Downloader).download_to_memory(...)
+    verifyStubbedInvocationsAreUsed()
     assert not Path('./test').exists()
 
 
 def test_download_to_memory_no_data():
     when(downloader.Downloader)._create_response().thenReturn(None)
     assert not downloader.download(url=URL, outfile='./test', hexdigest='6cb91af4ed4c60c11613b75cd1fc6116')
-    verify(downloader.Downloader)._create_response()
+    verifyStubbedInvocationsAreUsed()
     assert not Path('./test').exists()
 
 
@@ -43,7 +43,7 @@ def test_download_delete_failed():
     assert Path('./test').exists()
     when(downloader.Downloader)._create_response().thenReturn(None)
     assert not downloader.download(url=URL, outfile='./test', hexdigest='6cb91af4ed4c60c11613b75cd1fc6116')
-    verify(downloader.Downloader)._create_response()
+    verifyStubbedInvocationsAreUsed()
     assert not Path('./test').exists()
 
 
@@ -53,5 +53,16 @@ def test_download_request_failed():
     req.reason = 'nope'
     when(requests).head(...).thenReturn(req)
     assert not downloader.download(url=URL, outfile='./test', hexdigest='6cb91af4ed4c60c11613b75cd1fc6116')
-    verify(requests).head(...)
+    verifyStubbedInvocationsAreUsed()
+    assert not Path('./test').exists()
+
+
+def test_download_method_not_allowed():
+    req = mock()
+    req.ok = False
+    req.reason = 'Method Not Allowed'
+    when(requests).head(...).thenReturn(req)
+    when(downloader.Downloader).download(...).thenReturn(True)
+    assert downloader.download(url=URL, outfile='./test', hexdigest='6cb91af4ed4c60c11613b75cd1fc6116')
+    verifyStubbedInvocationsAreUsed()
     assert not Path('./test').exists()

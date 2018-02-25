@@ -290,8 +290,9 @@ def download(
     LOGGER.info(f'downloading: {locals()}')
     req = requests.head(url, headers=REQUESTS_HEADERS, timeout=5)
     if not req.ok:
-        LOGGER.error(f'Download failed: {req.reason}')
-        return False
+        if req.reason not in ['Method Not Allowed']:
+            LOGGER.error(f'Download failed: {req.reason}')
+            return False
 
     LOGGER.debug('Processing download request')
 
