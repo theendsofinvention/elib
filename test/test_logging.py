@@ -144,7 +144,7 @@ def test_custom_handler(setup_logging):
 )
 def test_handler_level(level):
     logger = elib.custom_logging.get_logger(elib.custom_random.random_string(4), log_to_file=True)
-    elib.custom_logging.set_handler_level(logger.name, 'ch', level)
+    elib.custom_logging.set_handler_level(logger, 'ch', level)
     elib.custom_logging.set_handler_level(logger.name, 'fh', level)
 
     for handler in logger.handlers:
