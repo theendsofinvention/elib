@@ -1,11 +1,13 @@
 # coding=utf-8
 
-import pytest
 import copy
 from pathlib import Path
-from mockito import when, verifyStubbedInvocationsAreUsed, mock
-import elib
+
+import pytest
 import requests
+from mockito import mock, verifyStubbedInvocationsAreUsed, when
+
+import elib
 from elib.updater import _github as github
 
 
@@ -112,4 +114,3 @@ def test_get_latest_release_req_failed(caplog):
     assert github.get_latest_release(repo) is None
     assert 'request failed: testing' in caplog.text
     verifyStubbedInvocationsAreUsed()
-

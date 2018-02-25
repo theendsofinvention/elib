@@ -1,12 +1,13 @@
 # coding=utf-8
 
-import pytest
-from mockito import when, verifyStubbedInvocationsAreUsed, mock
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
-from elib.updater import _updater as updater
+import pytest
+from mockito import mock, verifyStubbedInvocationsAreUsed, when
+
 from elib.updater import _github as github
+from elib.updater import _updater as updater
 
 
 @pytest.fixture(name='release')
@@ -95,4 +96,3 @@ def test_updater_no_release(caplog):
     upd.update()
     assert 'unable to obtain a release from Github' in caplog.text
     verifyStubbedInvocationsAreUsed()
-
