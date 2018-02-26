@@ -19,6 +19,7 @@ pyyaml = "*"
 gtts = "*"
 pefile = "*"
 humanize = "*"
+gitpython = "*"
 
 
 [dev-packages]
