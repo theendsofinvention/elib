@@ -6,9 +6,12 @@ import os
 import sys
 import typing
 
-import epab.utils
 import git
 from git.exc import GitCommandError
+
+from .custom_logging import get_logger
+
+LOGGER = get_logger('ELIB')
 
 
 # pylint: disable=too-many-public-methods
@@ -35,7 +38,7 @@ class Repo:
             tag: tag as a string
             overwrite: replace existing tag
         """
-        epab.utils.info(f'Tagging repo: {tag}')
+        LOGGER.debug(f'tagging repo: {tag}')
 
         try:
             self.repo.create_tag(tag)
@@ -53,7 +56,7 @@ class Repo:
         Args:
             tag: tag to remove
         """
-        epab.utils.info(f'Removing tag: {tag}')
+        LOGGER.debug(f'removing tag: {tag}')
 
         self.repo.delete_tag(*tag)
 
@@ -104,29 +107,29 @@ class Repo:
             stash_name: name of the stash for easier later referencing
         """
         if self.stashed:
-            epab.utils.error('Already stashed')
+            LOGGER.error('already stashed')
         else:
             if not self.index_is_empty():
-                epab.utils.error('Cannot stash; index is not empty')
+                LOGGER.error('cannot stash; index is not empty')
                 sys.exit(-1)
             if self.untracked_files():
-                epab.utils.error('Cannot stash; there are untracked files')
+                LOGGER.error('cannot stash; there are untracked files')
                 sys.exit(-1)
             if self.changed_files():
-                epab.utils.info('Stashing changes')
+                LOGGER.debug('stashing changes')
                 self.repo.git.stash('push', '-u', '-k', '-m', f'"{stash_name}"')
                 self.stashed = True
             else:
-                epab.utils.info('No changes to stash')
+                LOGGER.debug('no changes to stash')
 
     def unstash(self):
         """
         Pops the last stash if EPAB made a stash before
         """
         if not self.stashed:
-            epab.utils.error('No stash')
+            LOGGER.error('no stash')
         else:
-            epab.utils.info('Popping stash')
+            LOGGER.debug('popping stash')
             self.repo.git.stash('pop')
             self.stashed = False
 
@@ -135,12 +138,11 @@ class Repo:
         """
         Makes sure the current working directory is a Git repository.
         """
-        epab.utils.cmd_start('checking repository')
+        LOGGER.debug('checking repository')
         if not os.path.exists('.git'):
-            epab.utils.cmd_end(' -> ERROR')
-            epab.utils.error('This command is meant to be ran in a Git repository.')
+            LOGGER.error('this command is meant to be ran in a Git repository.')
             sys.exit(-1)
-        epab.utils.cmd_end(' -> OK')
+        LOGGER.debug('repository check succeeded')
 
     def last_commit_msg(self) -> str:
         """
@@ -192,21 +194,21 @@ class Repo:
         """
         Resets changes in the index (working tree untouched)
         """
-        epab.utils.info('Resetting changes')
+        LOGGER.debug('resetting changes')
         self.repo.index.reset()
 
     def stage_all(self):
         """
         Stages all changed and untracked files
         """
-        epab.utils.info('Staging all files')
+        LOGGER.debug('staging all files')
         self.repo.git.add(A=True)
 
     def stage_modified(self):
         """
         Stages modified files only (no untracked)
         """
-        epab.utils.info('Staging modified files')
+        LOGGER.debug('staging modified files')
         self.repo.git.add(u=True)
 
     def stage_subset(self, *files_to_add: str):
@@ -215,7 +217,7 @@ class Repo:
         Args:
             *files_to_add: files to stage
         """
-        epab.utils.info(f'Staging files: {files_to_add}')
+        LOGGER.debug(f'staging files: {files_to_add}')
         self.repo.git.add(*files_to_add, A=True)
         # self.repo.index.add(files_to_add)
 
@@ -257,13 +259,13 @@ class Repo:
         files_to_add = self._sanitize_files_to_add(files_to_add)
 
         if not message:
-            epab.utils.error('Empty commit message')
+            LOGGER.error('empty commit message')
             sys.exit(1)
 
         if os.getenv('APPVEYOR'):
             message = self._add_skip_ci_to_commit_msg(message)
 
-            epab.utils.info(f'Committing with message: {message}')
+            LOGGER.debug(f'committing with message: {message}')
 
         if files_to_add is None:
             self.stage_all()
@@ -272,7 +274,7 @@ class Repo:
             self.stage_subset(*files_to_add)
 
         if self.index_is_empty() and not allow_empty:
-            epab.utils.error('Empty commit')
+            LOGGER.error('empty commit')
             sys.exit(-1)
 
         self.repo.index.commit(message=message)
@@ -296,7 +298,7 @@ class Repo:
             else:
                 message = last_commit_msg
         if message is None:
-            epab.utils.error('Missing either "new_message" or "append_to_msg"')
+            LOGGER.error('missing either "new_message" or "append_to_msg"')
             sys.exit(-1)
         return message
 
@@ -318,7 +320,7 @@ class Repo:
         files_to_add = self._sanitize_files_to_add(files_to_add)
 
         if new_message and append_to_msg:
-            epab.utils.error('Cannot use "new_message" and "append_to_msg" together')
+            LOGGER.error('cannot use "new_message" and "append_to_msg" together')
             sys.exit(-1)
 
         message = self._sanitize_amend_commit_message(append_to_msg, new_message)
@@ -326,18 +328,18 @@ class Repo:
         if os.getenv('APPVEYOR'):
             message = f'{message} [skip ci]'
 
-        epab.utils.info(f'Amending commit with new message: {message}')
+        LOGGER.debug(f'amending commit with new message: {message}')
         latest_tag = self.get_current_tag()
         if latest_tag:
-            epab.utils.info(f'Removing tag: {latest_tag}')
+            LOGGER.debug(f'removing tag: {latest_tag}')
             self.remove_tag(latest_tag)
 
-        epab.utils.info('Going back one commit')
+        LOGGER.debug('going back one commit')
         branch = self.repo.head.reference
         try:
             branch.commit = self.repo.head.commit.parents[0]
         except IndexError:
-            epab.utils.error('Cannot amend the first commit')
+            LOGGER.error('cannot amend the first commit')
             sys.exit(-1)
         if files_to_add:
             self.stage_subset(*files_to_add)
@@ -345,7 +347,7 @@ class Repo:
             self.stage_all()
         self.repo.index.commit(message, skip_hooks=True)
         if latest_tag:
-            epab.utils.info(f'Resetting tag: {latest_tag}')
+            LOGGER.debug(f'resetting tag: {latest_tag}')
             self.tag(latest_tag)
 
     def merge(self, ref_name: str):
@@ -356,16 +358,16 @@ class Repo:
             ref_name: ref to merge in the current one
         """
         if self.is_dirty():
-            epab.utils.error(f'Repository is dirty; cannot merge "{ref_name}"')
+            LOGGER.error(f'repository is dirty; cannot merge "{ref_name}"')
             sys.exit(-1)
-        epab.utils.info(f'Merging {ref_name} into {self.get_current_branch()}')
+        LOGGER.debug(f'merging {ref_name} into {self.get_current_branch()}')
         self.repo.git.merge(ref_name)
 
     def push(self):
         """
         Pushes all refs (branches and tags) to origin
         """
-        epab.utils.info('Pushing repo to origin')
+        LOGGER.debug('pushing repo to origin')
         self.repo.git.push()
         self.push_tags()
 
@@ -373,7 +375,7 @@ class Repo:
         """
         Pushes tags to origin
         """
-        epab.utils.info('Pushing tags to origin')
+        LOGGER.debug('pushing tags to origin')
         self.repo.git.push('--tags')
 
     def list_branches(self) -> typing.List[str]:
@@ -392,7 +394,7 @@ class Repo:
         try:
             self.repo.git.check_ref_format('--branch', branch_name)
         except git.exc.GitCommandError:  # pylint: disable=no-member
-            epab.utils.error(f'Invalid branch name: {branch_name}')
+            LOGGER.error(f'invalid branch name: {branch_name}')
             sys.exit(1)
 
     def checkout(self, reference: str):
@@ -406,21 +408,21 @@ class Repo:
 
         """
         if not self.index_is_empty():
-            epab.utils.error('Index contains change; cannot checkout')
+            LOGGER.error('index contains change; cannot checkout')
             print(self.status())
             sys.exit(-1)
         if self.is_dirty(untracked=True):
-            epab.utils.error(f'Repository is dirty; cannot checkout "{reference}"')
+            LOGGER.error(f'repository is dirty; cannot checkout "{reference}"')
             print(self.status())
             sys.exit(-1)
-        epab.utils.info(f'Checking out: {reference}')
+        LOGGER.debug(f'checking out: {reference}')
         for head in self.repo.heads:
             if head.name == reference:
                 self.repo.head.reference = head
                 self.repo.head.reset(index=True, working_tree=True)
                 break
         else:
-            epab.utils.error(f'Unknown reference: {reference}')
+            LOGGER.error(f'unknown reference: {reference}')
             sys.exit(-1)
 
     def create_branch(self, branch_name: str):
@@ -431,10 +433,10 @@ class Repo:
             branch_name: name of the branch
 
         """
-        epab.utils.info(f'Creating branch: {branch_name}')
+        LOGGER.debug(f'creating branch: {branch_name}')
         self._validate_branch_name(branch_name)
         if branch_name in self.list_branches():
-            epab.utils.error('Branch already exists')
+            LOGGER.error('branch already exists')
             sys.exit(1)
         new_branch = self.repo.create_head(branch_name)
         new_branch.commit = self.repo.head.commit
@@ -457,11 +459,11 @@ class Repo:
         """
         result = False
         if not self.index_is_empty():
-            epab.utils.error('Index is not empty')
+            LOGGER.error('index is not empty')
             result = True
         changed_files = self.changed_files()
         if bool(changed_files):
-            epab.utils.error(f'Repo has {len(changed_files)} modified files: {changed_files}')
+            LOGGER.error(f'repo has {len(changed_files)} modified files: {changed_files}')
             result = True
         if untracked:
             result = result or self.untracked_files()

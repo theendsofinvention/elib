@@ -2,7 +2,7 @@
 from pathlib import Path
 
 import requests
-from mockito import mock, when, verifyStubbedInvocationsAreUsed
+from mockito import mock, verifyStubbedInvocationsAreUsed, when
 
 from elib import downloader
 
