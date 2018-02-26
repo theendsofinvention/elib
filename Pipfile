@@ -20,6 +20,9 @@ gtts = "*"
 pefile = "*"
 humanize = "*"
 gitpython = "*"
+click = "*"
+tqdm = "*"
+packaging = "*"
 
 
 [dev-packages]
