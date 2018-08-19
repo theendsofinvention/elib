@@ -23,6 +23,8 @@ gitpython = "*"
 click = "*"
 tqdm = "*"
 packaging = "*"
+raven = "*"
+certifi = "*"
 
 
 [dev-packages]
