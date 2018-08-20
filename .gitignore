@@ -9,8 +9,15 @@ __pycache__
 .coverage
 coverage.xml
 htmlcov
-/Pipfile.lock
 /.hypothesis/
 /.pytest_cache/
 *.log
 /doitall.cmd
+.idea/
+.cache
+/dist/
+/build/
+*.spec
+.coverage*
+*.egg-info/
+.mypy_cache

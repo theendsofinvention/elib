@@ -23,9 +23,12 @@ gitpython = "*"
 click = "*"
 tqdm = "*"
 packaging = "*"
+raven = "*"
+certifi = "*"
 
 
 [dev-packages]
 
 epab = "*"
 httmock = "*"
+mimesis = "*"

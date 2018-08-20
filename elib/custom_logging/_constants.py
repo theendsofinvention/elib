@@ -3,6 +3,7 @@
 Logging constants
 """
 import logging as base
+import typing
 
 DEFAULT_CONSOLE_FORMAT = '%(relativeCreated)08d ms ' \
                          '%(levelname)8s ' \
@@ -14,8 +15,8 @@ DEFAULT_FILE_FORMAT = '%(asctime)s %(levelname)8s %(name)s ' \
                       '%(thread)d %(threadName)s ' \
                       '%(pathname)s[%(lineno)d].%(funcName)s: ' \
                       '%(message)s'
-LOGGERS = {}
-ROOT_LOGGER = None
+LOGGERS: dict = {}
+ROOT_LOGGER: typing.Optional[base.Logger] = None
 # noinspection SpellCheckingInspection
 LEVELS = {
     'DEBUG': base.DEBUG,

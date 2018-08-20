@@ -48,5 +48,5 @@ def create_new_paste(title, files: typing.List[PasteContent], public: bool = Fal
         resp = json.loads(req.text)
         url = resp['url'].replace('https://snippets.glot.io', 'https://glot.io')
         return url
-    else:
-        raise PasteError(f'failed to post content; reason: {req.reason}')
+
+    raise PasteError(f'failed to post content; reason: {req.reason}')

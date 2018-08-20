@@ -14,8 +14,6 @@ import delegator
 from elib.console import cmd_end, cmd_start, error, info, std_err, std_out
 from elib.settings import ELIBSettings
 
-KNOWN_EXECUTABLES = {}
-
 
 def _append_exe(executable):
     if not executable.endswith('.exe'):
@@ -27,7 +25,7 @@ def _append_exe(executable):
 def _set_paths(*paths: str):
     if not paths:
         path = os.environ['PATH']
-        paths = [Path(sys.exec_prefix, 'Scripts').absolute()] + path.split(os.pathsep)
+        paths = (str(Path(sys.exec_prefix, 'Scripts').absolute()),) + tuple(path.split(os.pathsep))
 
     return paths
 

@@ -17,7 +17,7 @@ class BaseConfig:
     Singleton configuration class for EDLM.
     """
 
-    def __init__(self, package_name: str, default_dict: dict = None):
+    def __init__(self, package_name: str, default_dict: dict = None) -> None:
         if default_dict is None:
             default_dict = {}
         self._config = everett.manager.ConfigManager(
