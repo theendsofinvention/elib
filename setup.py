@@ -5,13 +5,28 @@ Etcher's stupid library
 
 import os
 
-from pip.req import parse_requirements
 from setuptools import find_packages, setup
 
-requirements = [str(r.req) for r in
-                parse_requirements('requirements.txt', session=False)]
-test_requirements = [str(r.req) for r in
-                     parse_requirements('requirements-dev.txt', session=False)]
+requirements = [
+    'configobj',
+    'delegator.py',
+    'everett',
+    'pyyaml',
+    'gtts',
+    'pefile',
+    'humanize',
+    'gitpython',
+    'click',
+    'tqdm',
+    'packaging',
+    'raven',
+    'certifi',
+]
+test_requirements = [
+    'epab',
+    'httmock',
+    'mimesis',
+]
 
 CLASSIFIERS = filter(None, map(str.strip,
                                """
