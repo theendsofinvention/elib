@@ -236,7 +236,7 @@ class Repo:
         if not files_to_add:
             return None
 
-        if files_to_add and isinstance(files_to_add, str):
+        if isinstance(files_to_add, str):
             return [files_to_add]
 
         return files_to_add
@@ -451,13 +451,13 @@ class Repo:
         self.create_branch(branch_name)
         self.checkout(branch_name)
 
-    def is_dirty(self, untracked=False) -> bool:
+    def is_dirty(self, untracked=False) -> typing.Union[bool, typing.List[str]]:
         """
         Checks if the current repository contains uncommitted or untracked changes
 
         Returns: true if the repository is clean
         """
-        result = False
+        result: typing.Union[bool, typing.List[str]] = False
         if not self.index_is_empty():
             LOGGER.error('index is not empty')
             result = True

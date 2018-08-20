@@ -11,7 +11,7 @@ class ConfigProp:
     Decorator-class to create properties for META instances.
     """
 
-    def __init__(self, parser: object, default: object = '__NO_DEFAULT__', namespace: str = None):
+    def __init__(self, parser: object, default: object = '__NO_DEFAULT__', namespace: str = None) -> None:
         """
         Initialize properties of the descriptor.
 

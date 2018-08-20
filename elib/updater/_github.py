@@ -40,12 +40,12 @@ class Asset:
     """
     Represents a Github asset
     """
-    name: str = _Val()
-    browser_download_url: str = _Val()
-    size: int = _Val()
-    state: str = _Val()
+    name: str = _Val()  # type: ignore
+    browser_download_url: str = _Val()  # type: ignore
+    size: int = _Val()  # type: ignore
+    state: str = _Val()  # type: ignore
 
-    def __init__(self, json: dict, release: 'Release'):
+    def __init__(self, json: dict, release: 'Release') -> None:
         self._json = json
         self._release = release
 
@@ -57,6 +57,7 @@ class Asset:
             if asset.name == f'{self.name}.md5':
                 hexdigest = Downloader(asset.browser_download_url, random_string())
                 hexdigest.download_to_memory()
+                assert isinstance(hexdigest.file_binary_data, bytes)
                 return hexdigest.file_binary_data.decode('utf16').strip()
 
         return None
@@ -76,11 +77,11 @@ class Release:
     """
     Represents a Github release
     """
-    tag_name: str = _Val()
-    body: str = _Val()
-    assets: typing.List[Asset] = _Val()
+    tag_name: str = _Val()  # type: ignore
+    body: str = _Val()  # type: ignore
+    assets: typing.List[Asset] = _Val()  # type: ignore
 
-    def __init__(self, json: dict):
+    def __init__(self, json: dict) -> None:
         self._json = json
 
     def __repr__(self) -> str:

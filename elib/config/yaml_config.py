@@ -2,9 +2,9 @@
 """
 Manages YAML configuration
 """
-
 import collections
 import os
+import typing
 
 import everett
 import everett.manager
@@ -38,7 +38,7 @@ def flatten_dict(source_dict: collections.MutableMapping, parent_key='', sep='_'
     :param sep: separator to use, defaults to "_"
     :return: config dictionary
     """
-    items = []
+    items: typing.List[typing.Tuple[str, object]] = []
     for key, value in source_dict.items():
         new_key = parent_key + sep + key if parent_key else key
         if isinstance(value, collections.MutableMapping):

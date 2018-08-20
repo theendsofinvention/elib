@@ -20,11 +20,11 @@ class Updater:
     Manage in-place executable updates
     """
 
-    def __init__(self, repo: str, current_version: str, local_executable: typing.Union[Path, str]):
+    def __init__(self, repo: str, current_version: str, local_executable: typing.Union[Path, str]) -> None:
         self._repo = repo
         self._current_version = current_version
         self._local_executable = Path(local_executable).absolute()
-        self._latest_release: Release = None
+        self._latest_release: typing.Optional[Release] = None
 
     @staticmethod
     def _write_bat(local_executable: Path):
@@ -65,6 +65,7 @@ class Updater:
 
     def _download_latest_release(self) -> bool:
         LOGGER.debug('downloading latest release')
+        assert isinstance(self._latest_release, Release)
         for asset in self._latest_release.assets:
             if asset.name.endswith('.exe'):
                 LOGGER.debug(f'executable asset found: {asset.name}')

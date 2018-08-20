@@ -48,19 +48,22 @@ def _setup_file_logging(logger: base.Logger,
                         file_level,
                         file_format,
                         **_):
-    file_name = Path(f'{logger_name}.log').absolute()
+    file_path = Path(f'{logger_name}.log').absolute()
     if rotate_logs:
-        file_handler = base_handlers.TimedRotatingFileHandler(
-            filename=file_name,
+        file_handler: typing.Union[
+            base_handlers.TimedRotatingFileHandler,
+            base.FileHandler
+        ] = base_handlers.TimedRotatingFileHandler(
+            filename=str(file_path),
             when=rotate_log_when,
             backupCount=rotate_log_backup_count,
             encoding='utf8',
         )
     else:
-        if Path(file_name).exists():
-            Path(file_name).unlink()
+        if file_path.exists():
+            file_path.unlink()
         file_handler = base.FileHandler(
-            filename=file_name,
+            filename=str(file_path),
             encoding='utf8'
         )
 
@@ -69,9 +72,9 @@ def _setup_file_logging(logger: base.Logger,
 
     logger.addHandler(file_handler)
     if rotate_logs:
-        logger.debug(f'added rotating file logging handler: {file_name}')
+        logger.debug(f'added rotating file logging handler: {file_path}')
     else:
-        logger.debug(f'added file logging handler: {file_name}')
+        logger.debug(f'added file logging handler: {file_path}')
 
     return file_handler
 
@@ -119,7 +122,7 @@ def get_logger(
     logger.setLevel(base.DEBUG)
 
     if use_click_handler:
-        console_handler = ClickHandler()
+        console_handler: typing.Union[ClickHandler, base.StreamHandler] = ClickHandler()
     else:
         console_handler = base.StreamHandler(sys.stdout)
     console_handler.setLevel(_str_to_level(console_level))
@@ -174,6 +177,7 @@ def set_root_logger(logger_name: typing.Union[base.Logger, str]):
         logger_name = logger_name.name
 
     _constants.ROOT_LOGGER = _constants.LOGGERS[logger_name]['logger']
+    assert isinstance(_constants.ROOT_LOGGER, base.Logger)
     for this_logger_name in _constants.LOGGERS:
         if this_logger_name == logger_name:
             continue

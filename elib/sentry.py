@@ -6,6 +6,7 @@ Connection with sentry.io
 import inspect
 import logging
 import sys
+import typing
 
 import certifi
 import raven
@@ -39,9 +40,9 @@ class Sentry(raven.Client):
     Connection with sentry.io
     """
 
-    def __init__(self, dsn: str, version: str, logger_name: str = None):
+    def __init__(self, dsn: str, version: str, logger_name: str = None) -> None:
         LOGGER.info('initializing Sentry')
-        self.registered_contexts = {}
+        self.registered_contexts: typing.Dict[str, SentryContext] = {}
         self._version = version
         raven.Client.__init__(
             self,

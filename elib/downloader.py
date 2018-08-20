@@ -40,7 +40,7 @@ class Downloader:  # pylint: disable=too-many-instance-attributes,too-many-argum
             download_retries: int = 3,
             block_size: int = 4096 * 4,
             hash_method: str = 'md5',
-    ):
+    ) -> None:
 
         self.url = url
         self.filename = filename
@@ -260,14 +260,13 @@ class Downloader:  # pylint: disable=too-many-instance-attributes,too-many-argum
             self._write_to_file()
             return True
 
-        else:
-            del self.file_binary_data
-            if os.path.exists(self.filename):
-                try:
-                    os.remove(self.filename)
-                except OSError:  # pragma: no cover
-                    pass
-            return False
+        del self.file_binary_data
+        if os.path.exists(self.filename):
+            try:
+                os.remove(self.filename)
+            except OSError:  # pragma: no cover
+                pass
+        return False
 
 
 def download(
@@ -298,6 +297,6 @@ def download(
 
     return Downloader(
         url=url,
-        filename=outfile,
+        filename=str(outfile),
         hexdigest=hexdigest,
     ).download()
