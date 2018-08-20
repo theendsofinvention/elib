@@ -31,3 +31,4 @@ certifi = "*"
 
 epab = "*"
 httmock = "*"
+mimesis = "*"
