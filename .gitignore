@@ -13,3 +13,11 @@ htmlcov
 /.pytest_cache/
 *.log
 /doitall.cmd
+.idea/
+.cache
+/dist/
+/build/
+*.spec
+.coverage*
+*.egg-info/
+.mypy_cache
