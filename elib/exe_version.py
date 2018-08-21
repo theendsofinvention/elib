@@ -2,6 +2,7 @@
 """
 Get version info from executable
 """
+import traceback
 import typing
 from pathlib import Path
 
@@ -46,6 +47,17 @@ class VersionInfo:  # pragma: no cover
         return self.file_version
 
 
+def _parse_file_info(file_info_list) -> typing.Optional['VersionInfo']:
+    for _file_info in file_info_list:
+        if _file_info.Key == b'StringFileInfo':  # pragma: no branch
+            for string in _file_info.StringTable:  # pragma: no branch
+                if b'FileVersion' in string.entries.keys():  # pragma: no branch
+                    file_version = string.entries[b'SpecialBuild'].decode('utf8')
+                    full_version = string.entries[b'PrivateBuild'].decode('utf8')
+                    return VersionInfo(file_version, full_version)
+    return None
+
+
 def get_product_version(path: typing.Union[str, Path]) -> VersionInfo:  # pragma: no cover
     """
     Get version info from executable
@@ -58,12 +70,18 @@ def get_product_version(path: typing.Union[str, Path]) -> VersionInfo:  # pragma
     path = Path(path).absolute()
     pe_info = pefile.PE(str(path))
 
-    for file_info in pe_info.FileInfo:
-        if file_info.Key == b'StringFileInfo':
-            for string in file_info.StringTable:
-                if b'FileVersion' in string.entries.keys():
-                    file_version = string.entries[b'SpecialBuild'].decode('utf8')
-                    full_version = string.entries[b'PrivateBuild'].decode('utf8')
-                    return VersionInfo(file_version, full_version)
+    try:
+        for file_info in pe_info.FileInfo:  # pragma: no branch
+            if isinstance(file_info, list):
+                result = _parse_file_info(file_info)
+                if result:
+                    return result
+            else:
+                result = _parse_file_info(pe_info.FileInfo)
+                if result:
+                    return result
 
-    raise RuntimeError(f'unable to obtain version from {path}')
+        raise RuntimeError(f'unable to obtain version from {path}')
+    except (KeyError, AttributeError) as exc:
+        traceback.print_exc()
+        raise RuntimeError(f'unable to obtain version from {path}') from exc
