@@ -37,6 +37,17 @@ def cleandir(request, tmpdir):
 
 
 @pytest.fixture(autouse=True)
+def _clean_os_env():
+    env = os.environ.copy()
+    yield
+    for key, value in env.items():
+        os.environ[key] = value
+    for key in os.environ.keys():
+        if key not in env.keys():
+            del os.environ[key]
+
+
+@pytest.fixture(autouse=True)
 def _unstub():
     unstub()
     yield
