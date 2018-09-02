@@ -10,7 +10,7 @@ from elib import custom_logging
 LOGGER = custom_logging.get_logger('ELIB')
 
 
-def get_hash(data, method: str = 'md5'):
+def get_hash(data, method: str = 'md5') -> str:
     """
     Computes hash from data
 
@@ -22,12 +22,15 @@ def get_hash(data, method: str = 'md5'):
 
     """
     if not isinstance(data, bytes):
-        data = bytes(data, 'utf-8')
+        try:
+            data = bytes(data, 'utf-8')
+        except ValueError:
+            raise ValueError(f'cannot cast {type(data)} to bytes implicitly')
 
     try:
         func = getattr(hashlib, method)
     except AttributeError:
-        raise RuntimeError('cannot find method "{}" in hashlib'.format(method))
+        raise AttributeError('cannot find method "{}" in hashlib'.format(method))
     else:
         hash_ = func(data).hexdigest()
         LOGGER.debug('hash for binary data: %s', hash_)

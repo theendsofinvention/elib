@@ -23,4 +23,5 @@ def dummy_config():
             return DummyConfig(*args, **kwargs)
 
         return DummyConfig
+
     yield make_dummy_config

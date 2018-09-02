@@ -3,7 +3,6 @@
 Convenience functions to manage logging
 """
 
-import importlib
 import logging as base
 import logging.handlers as base_handlers
 import sys
@@ -177,23 +176,16 @@ def set_root_logger(logger_name: typing.Union[base.Logger, str]):
         logger_name = logger_name.name
 
     _constants.ROOT_LOGGER = _constants.LOGGERS[logger_name]['logger']
-    assert isinstance(_constants.ROOT_LOGGER, base.Logger)
     for this_logger_name in _constants.LOGGERS:
         if this_logger_name == logger_name:
             continue
 
         this_logger = _constants.LOGGERS[this_logger_name]['logger']
-        _remove_all_handlers_from_logger(this_logger)
-        for handler in _constants.ROOT_LOGGER.handlers:
-            this_logger.addHandler(handler)
-
-    for logger_name_ in _constants.LOGGERS:
-        try:
-            module = importlib.import_module(logger_name_)
-            version = getattr(module, '__version__', 'no __version__ found')
-            _constants.ROOT_LOGGER.debug(f'{logger_name_}: {version}')
-        except ModuleNotFoundError:
-            pass
+        if isinstance(this_logger, base.Logger):
+            _remove_all_handlers_from_logger(this_logger)
+            if _constants.ROOT_LOGGER:
+                for handler in _constants.ROOT_LOGGER.handlers:
+                    this_logger.addHandler(handler)
 
 
 def get_root_logger():

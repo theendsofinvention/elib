@@ -76,7 +76,7 @@ class YAMLConfig:
         :return: dictionary
         """
         with open(path) as stream:
-            return yaml.load(stream)
+            return yaml.safe_load(stream)
 
     def get(self, key, namespace=None):
         """

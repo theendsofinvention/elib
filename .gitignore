@@ -21,3 +21,6 @@ htmlcov
 .coverage*
 *.egg-info/
 .mypy_cache
+*.example
+packages_elib.png
+classes_elib.png

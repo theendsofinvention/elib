@@ -26,5 +26,5 @@ def test_get_hash_from_file():
 
 
 def test_get_hash_wrong_method():
-    with pytest.raises(RuntimeError):
+    with pytest.raises(AttributeError):
         elib.hash_.get_hash('test', 'nope')

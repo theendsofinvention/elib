@@ -57,8 +57,9 @@ class Asset:
             if asset.name == f'{self.name}.md5':
                 hexdigest = Downloader(asset.browser_download_url, random_string())
                 hexdigest.download_to_memory()
-                assert isinstance(hexdigest.file_binary_data, bytes)
-                return hexdigest.file_binary_data.decode('utf16').strip()
+                data = hexdigest.file_binary_data
+                if data:
+                    return data.decode('utf16').strip()
 
         return None
 
