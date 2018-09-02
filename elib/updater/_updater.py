@@ -2,7 +2,7 @@
 """
 Manage in-place executable updates
 """
-import subprocess
+import subprocess  # nosec
 import sys
 import typing
 from pathlib import Path
@@ -59,17 +59,18 @@ class Updater:
 
         LOGGER.debug('starting update batch file')
         args = ['wscript.exe', 'update.vbs', 'update.bat']
-        subprocess.Popen(args)
+        subprocess.Popen(args)  # nosec
 
         sys.exit(0)
 
     def _download_latest_release(self) -> bool:
         LOGGER.debug('downloading latest release')
-        assert isinstance(self._latest_release, Release)
-        for asset in self._latest_release.assets:
-            if asset.name.endswith('.exe'):
-                LOGGER.debug(f'executable asset found: {asset.name}')
-                return asset.download('update')
+        latest_release = self._latest_release
+        if latest_release:
+            for asset in latest_release.assets:
+                if asset.name.endswith('.exe'):
+                    LOGGER.debug(f'executable asset found: {asset.name}')
+                    return asset.download('update')
 
         LOGGER.error('no executable asset found')
         return False
