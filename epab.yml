@@ -1,9 +1,0 @@
-package: 'elib'
-
-doc:
-  repo: 'https://github.com/132nd-etcher/elib.git'
-  folder: './elib'
-
-test:
-  runner_options: ''
-  av_runner_options: '--long'
