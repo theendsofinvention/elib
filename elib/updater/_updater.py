@@ -9,8 +9,8 @@ from pathlib import Path
 
 from packaging import version
 
-from ..custom_logging import get_logger
 from ._github import Release, get_latest_release
+from ..custom_logging import get_logger
 
 LOGGER = get_logger('ELIB')
 

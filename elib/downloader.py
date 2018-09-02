@@ -13,7 +13,6 @@ import tqdm
 import urllib3  # type: ignore
 
 import elib.custom_logging
-
 from .hash_ import get_hash
 
 LOGGER = elib.custom_logging.get_logger('ELIB')
@@ -226,19 +225,23 @@ class Downloader:  # pylint: disable=too-many-instance-attributes,too-many-argum
                                            self.content_length,
                                            received_data)
 
-                status = {'total': self.content_length,
-                          'downloaded': received_data,
-                          'status': 'downloading',
-                          'percent_complete': percent,
-                          'time': time_left}
+                status = {
+                    'total': self.content_length,
+                    'downloaded': received_data,
+                    'status': 'downloading',
+                    'percent_complete': percent,
+                    'time': time_left
+                }
 
                 _progress_hook(status)
 
-            status = {'total': self.content_length,
-                      'downloaded': received_data,
-                      'status': 'finished',
-                      'percent_complete': percent,
-                      'time': '00:00'}
+            status = {
+                'total': self.content_length,
+                'downloaded': received_data,
+                'status': 'finished',
+                'percent_complete': percent,
+                'time': '00:00'
+            }
 
             _progress_hook(status)
         LOGGER.debug('Download Complete')
