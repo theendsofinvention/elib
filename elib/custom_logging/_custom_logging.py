@@ -108,7 +108,6 @@ def get_logger(
     :return: logger object
     """
     if logger_name in _constants.LOGGERS:
-        _constants.LOGGERS[logger_name]['logger'].debug(f'logger already initialized: {logger_name}')
         return _constants.LOGGERS[logger_name]['logger']
 
     logger = base.getLogger(logger_name)
