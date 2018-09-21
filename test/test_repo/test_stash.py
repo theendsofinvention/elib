@@ -57,5 +57,6 @@ def test_stash_modified_index(repo, caplog):
 
 def test_already_stashed(repo, caplog):
     repo.stashed = True
-    repo.stash('test')
+    with pytest.raises(SystemExit):
+        repo.stash('test')
     assert 'already stashed' in caplog.text

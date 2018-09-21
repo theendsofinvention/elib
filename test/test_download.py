@@ -6,11 +6,11 @@ from mockito import mock, verifyStubbedInvocationsAreUsed, when
 
 from elib import downloader
 
-URL = r'http://www.ovh.net/files/1Mio.dat'
+URL = r'http://ipv4.download.thinkbroadband.com/5MB.zip'
 
 
 def test_download():
-    assert downloader.download(url=URL, outfile='./test', hexdigest='6cb91af4ed4c60c11613b75cd1fc6116')
+    assert downloader.download(url=URL, outfile='./test', hexdigest='c10201c74dafe928c9a192440b20ff59')
     assert Path('./test').exists()
 
 

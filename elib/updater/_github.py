@@ -96,7 +96,7 @@ def get_latest_release(repo: str) -> typing.Optional[Release]:
     :param repo: repository in the form of "owner/repo"
     :return: Release object or None"
     """
-    LOGGER.debug(f'obtaining latest version for "{repo}"')
+    LOGGER.debug('obtaining latest version for "%s"', repo)
     try:
         req = requests.get(rf'https://api.github.com/repos/{repo}/releases/latest', timeout=5)
     except requests.exceptions.Timeout:
@@ -104,7 +104,7 @@ def get_latest_release(repo: str) -> typing.Optional[Release]:
         return None
 
     if not req.ok:
-        LOGGER.error(f'request failed: {req.reason}')
+        LOGGER.error('request failed: %s', req.reason)
         return None
 
     return Release(req.json())

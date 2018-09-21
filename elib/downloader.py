@@ -289,14 +289,14 @@ def download(
 
     """
     outfile = Path(outfile).absolute()
-    LOGGER.info(f'downloading: {locals()}')
-    req = requests.head(url, headers=REQUESTS_HEADERS, timeout=5)
-    if not req.ok:
-        if req.reason not in ['Method Not Allowed']:
-            LOGGER.error(f'Download failed: {req.reason}')
+    LOGGER.info('downloading: %s', locals())
+    resp = requests.head(url, headers=REQUESTS_HEADERS, timeout=5)
+    if not resp.ok:
+        if resp.reason not in ['Method Not Allowed']:
+            LOGGER.error('download failed: %s', resp.reason)
             return False
 
-    LOGGER.debug('Processing download request')
+    LOGGER.debug('processing download request')
 
     return Downloader(
         url=url,
