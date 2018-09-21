@@ -124,13 +124,6 @@ def test_commit_amend_appveyor(repo):
     assert len(list(repo.repo.iter_commits())) == 2
 
 
-def test_make_skip_ci_commit(repo):
-    message = 'test'
-    assert repo._add_skip_ci_to_commit_msg(message) == 'test [skip ci]'
-    message = 'test\n\ncaribou'
-    assert repo._add_skip_ci_to_commit_msg(message) == 'test [skip ci]\n\ncaribou'
-
-
 def test__sanitize_amend_commit_message(repo):
     assert repo.last_commit_msg() == 'init commit'
     assert repo._sanitize_amend_commit_message(new_message='test') == 'test'
