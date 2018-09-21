@@ -11,7 +11,6 @@ from pathlib import Path
 
 import gtts
 import requests
-from gtts import gTTS
 from gtts_token.gtts_token import Token
 
 import elib.custom_logging
@@ -27,19 +26,19 @@ def _patch_faulty_function(self):
     timestamp = calendar.timegm(time.gmtime())
     hours = int(math.floor(timestamp / 3600))
 
-    response = requests.get("https://translate.google.com/")
+    response = requests.get(r"https://translate.google.com/")
     line = response.text.split('\n')[-1]
 
-    parsed = re.search("(?:TKK='(?:(\d+)\.(\d+))';)", line)
-    a, b = parsed.groups()
+    parsed = re.search(r"(?:TKK='(?:(\d+)\.(\d+))';)", line)
+    tok1, tok2 = parsed.groups()
 
-    result = str(hours) + "." + str(int(a) + int(b))
+    result = str(hours) + "." + str(int(tok1) + int(tok2))
     self.token_key = result
     return result
 
 
 # Monkey patch faulty function.
-Token._get_token_key = _patch_faulty_function
+Token._get_token_key = _patch_faulty_function  # pylint: disable=protected-access
 
 
 def text_to_speech(text: str, file_path: typing.Union[str, Path], overwrite: bool = False) -> Path:
@@ -54,10 +53,10 @@ def text_to_speech(text: str, file_path: typing.Union[str, Path], overwrite: boo
     Returns: path to saved MP3
 
     """
-    LOGGER.debug(f'{text}\n->{file_path}')
+    LOGGER.debug('%s\n->%s', text, file_path)
     file_path = elib.path.ensure_path(file_path, must_exist=False)
     if file_path.exists() and not overwrite:
-        LOGGER.error(f'"{file_path}" already exists')
+        LOGGER.error('"%s" already exists', file_path)
         raise FileExistsError(file_path)
     LOGGER.debug('encoding text')
     tts = gtts.gTTS(text=text)

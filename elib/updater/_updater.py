@@ -52,7 +52,7 @@ class Updater:
         LOGGER.info(f'installing latest version')
 
         local_executable = Path(self._local_executable).absolute()
-        LOGGER.debug(f'local executable: "{local_executable}"')
+        LOGGER.debug('local executable: "%s"', local_executable)
 
         self._write_bat(local_executable)
         self._write_vbs()
@@ -69,7 +69,7 @@ class Updater:
         if latest_release:
             for asset in latest_release.assets:
                 if asset.name.endswith('.exe'):
-                    LOGGER.debug(f'executable asset found: {asset.name}')
+                    LOGGER.debug('executable asset found: %s', asset.name)
                     return asset.download('update')
 
         LOGGER.error('no executable asset found')
@@ -83,11 +83,11 @@ class Updater:
         if not self._latest_release:
             LOGGER.error('unable to obtain a release from Github')
             return
-        LOGGER.debug(f'latest release: {self._latest_release}')
+        LOGGER.debug('latest release: %s', self._latest_release)
         latest_version = version.parse(self._latest_release.tag_name)
-        LOGGER.debug(f'latest version: {latest_version}')
+        LOGGER.debug('latest version: %s', latest_version)
         current_version = version.parse(self._current_version)
-        LOGGER.debug(f'current version: {current_version}')
+        LOGGER.debug('current version: %s', current_version)
         if latest_version > current_version:
             LOGGER.info('new version found')
             if self._download_latest_release():
