@@ -10,7 +10,7 @@ import typing
 import git
 from git.exc import GitCommandError
 
-LOGGER = logging.getLogger('ELIB')
+LOGGER = logging.getLogger('elib')
 
 
 # pylint: disable=too-many-public-methods

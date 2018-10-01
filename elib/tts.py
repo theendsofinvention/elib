@@ -16,7 +16,7 @@ from gtts_token.gtts_token import Token
 
 import elib.path
 
-LOGGER = logging.getLogger('ELIB')
+LOGGER = logging.getLogger('elib')
 
 
 def _patch_faulty_function(self):

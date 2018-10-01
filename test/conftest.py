@@ -55,7 +55,7 @@ def _unstub():
 @pytest.fixture(autouse=True)
 def _setup_logging():
     import logging
-    logger = logging.getLogger('ELIB')
+    logger = logging.getLogger('elib')
     logger.setLevel(logging.DEBUG)
     yield
 

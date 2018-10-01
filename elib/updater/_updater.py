@@ -12,7 +12,7 @@ from packaging import version
 
 from ._github import Release, get_latest_release
 
-LOGGER = logging.getLogger('ELIB')
+LOGGER = logging.getLogger('elib')
 
 
 class Updater:

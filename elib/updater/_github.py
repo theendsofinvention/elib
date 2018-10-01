@@ -13,7 +13,7 @@ from humanize import naturalsize
 from ..custom_random import random_string
 from ..downloader import Downloader, download
 
-LOGGER = logging.getLogger('ELIB')
+LOGGER = logging.getLogger('elib')
 
 
 class _Val:

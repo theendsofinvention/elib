@@ -6,7 +6,7 @@ Computes hashes
 import hashlib
 import logging
 
-LOGGER = logging.getLogger('ELIB')
+LOGGER = logging.getLogger('elib')
 
 
 def get_hash(data, method: str = 'md5') -> str:

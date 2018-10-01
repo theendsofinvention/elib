@@ -15,7 +15,7 @@ import urllib3  # type: ignore
 
 from .hash_ import get_hash
 
-LOGGER = logging.getLogger('ELIB')
+LOGGER = logging.getLogger('elib')
 
 REQUESTS_HEADERS = {'User-agent': 'Mozilla/5.0'}
 
