@@ -2,22 +2,22 @@ beautifulsoup4==4.6.3
 bs4==0.0.1
 certifi==2018.8.24
 chardet==3.0.4
-click==6.7
+click==7.0
 configobj==5.0.6
 delegator.py==0.1.1
 everett==0.9
 future==0.16.0
 gitdb2==2.0.4
 gitpython==2.1.11
-gtts-token==1.1.1
+gtts-token==1.1.2
 gtts==2.0.1
 humanize==0.5.1
 idna==2.7
-packaging==17.1
+packaging==18.0
 pefile==2018.8.8
 pexpect==4.6.0
 ptyprocess==0.6.0
-pyparsing==2.2.1; python_version != '3.2.*'
+pyparsing==2.2.2; python_version >= '2.6'
 pyyaml==3.13
 raven==6.9.0
 requests==2.19.1
