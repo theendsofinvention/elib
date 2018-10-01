@@ -19,7 +19,7 @@ docutils==0.14
 dparse==0.4.1; python_version != '3.2.*'
 elib-config==2018.9.16.1; python_version != '3.0.*'
 elib-run==2018.9.9.1
-epab==2018.9.16.2
+epab==2018.10.1.1
 execnet==1.5.0; python_version != '3.0.*'
 faker==0.9.1
 flake8==3.5.0
