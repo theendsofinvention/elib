@@ -2,6 +2,7 @@
 """
 Download content from the Web
 """
+import logging
 import os
 import time
 import typing
@@ -12,10 +13,9 @@ import requests
 import tqdm
 import urllib3  # type: ignore
 
-import elib.custom_logging
 from .hash_ import get_hash
 
-LOGGER = elib.custom_logging.get_logger('ELIB')
+LOGGER = logging.getLogger('ELIB')
 
 REQUESTS_HEADERS = {'User-agent': 'Mozilla/5.0'}
 

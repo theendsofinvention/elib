@@ -14,9 +14,7 @@ import raven.breadcrumbs
 import raven.conf
 import raven.handlers.logging
 
-import elib
-
-LOGGER = elib.custom_logging.get_logger('ELIB')
+LOGGER = logging.getLogger('ELIB')
 
 
 class SentryContext:

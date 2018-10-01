@@ -4,10 +4,9 @@ Computes hashes
 """
 
 import hashlib
+import logging
 
-from elib import custom_logging
-
-LOGGER = custom_logging.get_logger('ELIB')
+LOGGER = logging.getLogger('ELIB')
 
 
 def get_hash(data, method: str = 'md5') -> str:

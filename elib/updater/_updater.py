@@ -2,6 +2,7 @@
 """
 Manage in-place executable updates
 """
+import logging
 import subprocess  # nosec
 import sys
 import typing
@@ -10,9 +11,8 @@ from pathlib import Path
 from packaging import version
 
 from ._github import Release, get_latest_release
-from ..custom_logging import get_logger
 
-LOGGER = get_logger('ELIB')
+LOGGER = logging.getLogger('ELIB')
 
 
 class Updater:
