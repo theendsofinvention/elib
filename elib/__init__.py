@@ -7,7 +7,7 @@ from pkg_resources import DistributionNotFound, get_distribution
 
 # noinspection PyUnresolvedReferences
 from . import (
-    config, console, custom_logging, custom_random, downloader, exe_version, hash_, paste, path, pretty, repo,
+    config, console, custom_random, downloader, exe_version, hash_, paste, path, pretty, repo,
     resource_path, run, settings, tts, updater,
 )
 

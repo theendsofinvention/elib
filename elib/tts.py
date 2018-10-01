@@ -3,6 +3,7 @@
 Manages TTS utilities
 """
 import calendar
+import logging
 import math
 import re
 import time
@@ -13,10 +14,9 @@ import gtts
 import requests
 from gtts_token.gtts_token import Token
 
-import elib.custom_logging
 import elib.path
 
-LOGGER = elib.custom_logging.get_logger('ELIB')
+LOGGER = logging.getLogger('elib')
 
 
 def _patch_faulty_function(self):

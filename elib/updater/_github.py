@@ -2,6 +2,7 @@
 """
 Interface to Github release objects
 """
+import logging
 import typing
 from pathlib import Path
 
@@ -9,11 +10,10 @@ import requests
 import requests.exceptions
 from humanize import naturalsize
 
-from ..custom_logging import get_logger
 from ..custom_random import random_string
 from ..downloader import Downloader, download
 
-LOGGER = get_logger('ELIB')
+LOGGER = logging.getLogger('elib')
 
 
 class _Val:
