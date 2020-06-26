@@ -31,7 +31,7 @@ hypothesis==5.18.1
 idna==2.9
 importlib-metadata==1.6.1; python_version < '3.8'
 isort==4.3.21
-lazy-object-proxy==1.4.2
+lazy-object-proxy==1.5.0
 mccabe==0.6.1
 mimesis==2.1.0
 mockito==1.1.1
