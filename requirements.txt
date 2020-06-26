@@ -25,5 +25,5 @@ requests==2.24.0
 six==1.15.0
 smmap2==3.0.0
 soupsieve==1.9.4
-tqdm==4.28.1
+tqdm==4.46.1
 urllib3==1.24.3
