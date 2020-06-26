@@ -8,7 +8,7 @@ configobj==5.0.6
 delegator.py==0.1.1
 everett==0.9
 future==0.18.2
-gitdb2==2.0.6
+gitdb2==4.0.1
 gitpython==2.1.11
 gtts-token==1.1.3
 gtts==2.0.1
