@@ -22,7 +22,7 @@ epab==2018.12.18.1
 execnet==1.7.1
 faker==4.1.1
 flake8==3.8.3
-future==0.18.1
+future==0.18.2
 gitchangelog==3.0.4
 gitdb2==2.0.6
 gitpython==2.1.11
