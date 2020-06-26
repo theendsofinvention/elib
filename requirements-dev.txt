@@ -82,7 +82,7 @@ typing-extensions==3.7.4.2
 urllib3==1.25.9
 vcrpy==4.0.2
 watchdog==0.10.3
-wcwidth==0.1.7
+wcwidth==0.2.5
 webencodings==0.5.1
 wheel==0.33.6
 wrapt==1.11.2
