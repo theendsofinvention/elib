@@ -32,11 +32,11 @@
         },
         "certifi": {
             "hashes": [
-                "sha256:339dc09518b07e2fa7eda5450740925974815557727d6bd35d319c1524a04a4c",
-                "sha256:6d58c986d22b038c8c0df30d639f23a3e6d172a05c3583e766f4c0b785c0986a"
+                "sha256:5930595817496dd21bb8dc35dad090f1c2cd0adfaf21204bf6732ca5d8ee34d3",
+                "sha256:8fc0819f1f30ba15bdb34cceffb9ef04d99f420f68eb75d901e9560b8749fc41"
             ],
             "index": "pypi",
-            "version": "==2018.10.15"
+            "version": "==2020.6.20"
         },
         "chardet": {
             "hashes": [
@@ -267,19 +267,18 @@
         },
         "bleach": {
             "hashes": [
-                "sha256:cc8da25076a1fe56c3ac63671e2194458e0c4d9c7becfd52ca251650d517903c",
-                "sha256:e78e426105ac07026ba098f04de8abe9b6e3e98b5befbf89b51a5ef0a4292b03"
+                "sha256:2bce3d8fab545a6528c8fa5d9f9ae8ebc85a56da365c7f85180bfe96a35ef22f",
+                "sha256:3c4c520fdb9db59ef139915a5db79f8b51bc2a7257ea0389f30c846883430a4b"
             ],
-            "index": "pypi",
-            "version": "==3.1.4"
+            "version": "==3.1.5"
         },
         "certifi": {
             "hashes": [
-                "sha256:339dc09518b07e2fa7eda5450740925974815557727d6bd35d319c1524a04a4c",
-                "sha256:6d58c986d22b038c8c0df30d639f23a3e6d172a05c3583e766f4c0b785c0986a"
+                "sha256:5930595817496dd21bb8dc35dad090f1c2cd0adfaf21204bf6732ca5d8ee34d3",
+                "sha256:8fc0819f1f30ba15bdb34cceffb9ef04d99f420f68eb75d901e9560b8749fc41"
             ],
             "index": "pypi",
-            "version": "==2018.10.15"
+            "version": "==2020.6.20"
         },
         "cffi": {
             "hashes": [
@@ -500,10 +499,10 @@
         },
         "hypothesis": {
             "hashes": [
-                "sha256:76144b48a54a197aac9e1aacbcdeca2e0e2753c838b3c7a22e0a6deb21fd01f5",
-                "sha256:b56c27733f896c80731302422c8c55dfd2e818059b3dca0f3717ddbae780dcd0"
+                "sha256:ba7c92006716aaee4684f7876c116adedcfb88b19fcb55d21c47b28f03f933bf",
+                "sha256:dd21b1be951fefc9022047824c262f4e88d95dd24141b837b92e235c63baabb7"
             ],
-            "version": "==5.18.3"
+            "version": "==5.19.0"
         },
         "idna": {
             "hashes": [
