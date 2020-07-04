@@ -119,10 +119,11 @@
         },
         "humanize": {
             "hashes": [
-                "sha256:a43f57115831ac7c70de098e6ac46ac13be00d69abbf60bdcac251344785bb19"
+                "sha256:4b4ce2fc1c9d79c63f68009ddf5a12ad238aa78e2fceb256b5aa921763551422",
+                "sha256:e01d52a6d597f125f99abedf91742ef6020dea6b88cb8d0f04744805ecd828e2"
             ],
             "index": "pypi",
-            "version": "==0.5.1"
+            "version": "==2.4.1"
         },
         "idna": {
             "hashes": [
