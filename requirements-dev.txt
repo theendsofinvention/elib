@@ -43,7 +43,7 @@ mypy==0.782
 packaging==18.0
 pathtools==0.1.2
 pbr==5.4.5
-pefile==2018.8.8
+pefile==2019.4.18
 pkginfo==1.5.0.1
 pluggy==0.13.1
 py==1.9.0
