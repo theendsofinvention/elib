@@ -41,11 +41,11 @@
         },
         "click": {
             "hashes": [
-                "sha256:2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13",
-                "sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"
+                "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a",
+                "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"
             ],
             "index": "pypi",
-            "version": "==7.0"
+            "version": "==7.1.2"
         },
         "configobj": {
             "hashes": [
@@ -312,11 +312,11 @@
         },
         "click": {
             "hashes": [
-                "sha256:2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13",
-                "sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"
+                "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a",
+                "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"
             ],
             "index": "pypi",
-            "version": "==7.0"
+            "version": "==7.1.2"
         },
         "colorama": {
             "hashes": [
@@ -492,10 +492,10 @@
         },
         "hypothesis": {
             "hashes": [
-                "sha256:b58b40984915fbea34db942f58faac78f3db66e379b5394cad0d0ef60b7d98be",
-                "sha256:f078ab6d0a151395e9f9df0bd6bd5e8f2f17a81cc0e9cbb53758b5aee1ce6085"
+                "sha256:8f3f74d0c3336bd6027dba15116ae9b1df10157a2f379d5b65120285d2146918",
+                "sha256:fd0e249421561751a9250757510d92b107a8e4665d31936b9564cdd3046d7676"
             ],
-            "version": "==5.19.3"
+            "version": "==5.20.2"
         },
         "idna": {
             "hashes": [
@@ -896,10 +896,10 @@
         },
         "stevedore": {
             "hashes": [
-                "sha256:79270bd5fb4a052e76932e9fef6e19afa77090c4000f2680eb8c2e887d2e6e36",
-                "sha256:9fb12884b510fdc25f8a883bb390b8ff82f67863fb360891a33135bcb2ce8c54"
+                "sha256:38791aa5bed922b0a844513c5f9ed37774b68edc609e5ab8ab8d8fe0ce4315e5",
+                "sha256:c8f4f0ebbc394e52ddf49de8bcc3cf8ad2b4425ebac494106bbc5e3661ac7633"
             ],
-            "version": "==3.1.0"
+            "version": "==3.2.0"
         },
         "text-unidecode": {
             "hashes": [
